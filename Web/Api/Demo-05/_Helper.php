@@ -157,56 +157,32 @@ function parse_string($array, $key, $default_value, $availables)
     return $default_value;
 }
 
-function parse_string_array($array, $key, $default_value, $availables)
+function parse_fields($array, $key, $default_value)
 {
     if(empty($array[$key]) === false)
     {
-        // อ่านเรื่อง explode ได้ที่ http://php.net/manual/en/function.explode.php
-        // ตัดสตริงด้วย ',' => ตัวอย่าง "id,title,excerpt" กลายเป็น ["id","title","excerpt"];
-        $field_array = explode(',', $array[$key]);
+        // อ่านเรื่อง str_replace ได้ที่ : http://www.w3schools.com/php/func_string_str_replace.asp
+        $replaced = str_replace(',', '`,`', $array[$key]);
+        $replaced = '`' . $replaced . '`';
 
-        // สร้าง Array
-        $parsed_field_array = [];
-
-        // For-Loop : http://www.w3schools.com/php/php_looping_for.asp
-        foreach ($field_array as $field)
-        {
-            // อ่านเรื่อง trim ได้ที่ : http://www.w3schools.com/php/func_string_trim.asp
-            // trim เพื่อลบ white space ซ้ายขวาของสตริง เช่น "  title  " เป็น "title";
-            $field = trim($field);
-
-            if( empty($field) === true ||
-                is_numeric($field) === true ||
-                in_array($field, $availables) === false)
-            {
-                http_response_code(400);
-                die();
-            }
-
-            // อ่านเรื่องการเพิ่มข้อมูลได้ที่ : http://php.net/manual/ru/function.array-push.php
-            // เพิ่มข้อมูลลงในอาร์เรย์
-            $parsed_field_array[] = $field;
-        }
-
-        return $parsed_field_array;
+        // ตัวอย่าง จาก id,title,excerpt เป็น `id`,`title`,`excerpt`
+        return $replaced;
     }
 
     return $default_value;
 }
 
-function parse_string_array_with_backticks($array, $key, $default_value, $availables)
-{
-    $parsed_array = parse_string_array($array, $key, $default_value, $availables);
-    $backtick_array = [];
 
-    foreach ($parsed_array as $item)
+function parse_fields_to_array($array, $key, $default_value)
+{
+    if(empty($array[$key]) === false)
     {
-        $backtick_array[] = '`' . $item . '`';
+        // อ่านเรื่อง explode ได้ที่ http://php.net/manual/en/function.explode.php
+        // ตัดสตริงด้วย ',' => ตัวอย่าง "id,title,excerpt" กลายเป็น ["id","title","excerpt"];
+        return explode(',', $array[$key]);
     }
 
-    // อ่านเรื่อง implode ได้ที่ http://php.net/manual/en/function.implode.php
-    // ต่อสตริงจากสตริงอาร์เรย์ด้วย ', '
-    return implode(', ', $backtick_array);
+    return $default_value;
 }
 
 ?>

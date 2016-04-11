@@ -41,10 +41,8 @@ $order_by = parse_string($_GET, 'order_by', 'created_date', $order_by_availables
 
 // สร้าง Array ของชื่อฟิลด์ที่อนุญาตให้ใช้ได้
 // string 'id' | 'title' | 'excerpt' | 'content' | 'created_date' | 'modified_date'
-$field_availables = [ 'id', 'title', 'excerpt', 'content', 'created_date', 'modified_date' ];
-$field_default = [ 'id', 'title', 'excerpt', 'created_date' ];
-
-$fields = parse_string_array_with_backticks($_GET, 'fields', $field_default, $field_availables);
+$field_default = "`id`, `title`, `excerpt`, `created_date`";
+$fields = parse_fields($_GET, 'fields', $field_default);
 
 // ถ้า Connect ไม่ได้จะจบการทำงานทันที
 $conn = database_connect();
@@ -59,6 +57,16 @@ $sql = "SELECT $fields
 
 // รันคำสั่ง SQL
 $result = $conn->query($sql);
+
+if($result === false)
+{
+    // ปิดการเชื่อมต่อ MySQL
+    $conn->close();
+
+    // 400 : Bad Request
+    http_response_code(400);
+    die();
+}
 
 // สร้างตัวแปรอาร์เรย์เพื่อเก็บผลลัพธ์
 $array = [];

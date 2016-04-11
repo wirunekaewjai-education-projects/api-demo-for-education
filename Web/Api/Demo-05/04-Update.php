@@ -19,8 +19,8 @@ filter_numeric_vars($_POST, ['id']);
 $id = $_POST['id'];
 
 // สร้าง Array ของชื่อฟิลด์ที่อนุญาตให้ใช้ได้
-$field_availables = [ 'title', 'excerpt', 'content' ];
-$fields = parse_string_array($_POST, 'fields', [], $field_availables);
+$field_defaults = [ 'title', 'excerpt', 'content' ];
+$fields = parse_fields_to_array($_POST, 'fields', $field_defaults);
 
 $set_array = [];
 
