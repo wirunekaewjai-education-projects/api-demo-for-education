@@ -21,7 +21,7 @@ $id = $_GET['id'];
 // สร้าง Array ของชื่อฟิลด์ที่อนุญาตให้ใช้ได้
 // string 'id' | 'title' | 'excerpt' | 'content' | 'created_date' | 'modified_date'
 $field_availables = [ 'id', 'title', 'excerpt', 'content', 'created_date', 'modified_date' ];
-$field_default = [ 'id', 'title', 'content', 'created_date' ];
+$field_default = [ 'id', 'title', 'content', 'created_date', 'modified_date' ];
 
 $fields = parse_string_array_with_backticks($_GET, 'fields', $field_default, $field_availables);
 
@@ -63,7 +63,7 @@ if($result->num_rows > 0)
 
     // ปิดการเชื่อมต่อ MySQL
     $conn->close();
-    
+
     response_json($object);
 }
 else

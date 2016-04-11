@@ -54,13 +54,13 @@ if($result->num_rows > 0)
     // อ่านเรื่อง intval ได้ที่ : http://php.net/manual/en/function.intval.php
     $object['id'] = intval($row['id']);
     $object['title'] = $row['title'];
-    $object['excerpt'] = $row['excerpt'];
+    $object['content'] = $row['content'];
     $object['created_date'] = $row['created_date'];
     $object['modified_date'] = $row['modified_date'];
 
     // ปิดการเชื่อมต่อ MySQL
     $conn->close();
-    
+
     response_json($object);
 }
 else
