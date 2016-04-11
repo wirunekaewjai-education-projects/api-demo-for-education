@@ -44,23 +44,31 @@ $a = doubleval($_GET['a']);
 $b = doubleval($_GET['b']);
 
 $operator = $_GET['operator'];
-if($operator !== '+' && $operator !== '-')
+
+$result = 0;
+if($operator === 'add')
+{
+    $result = $a + $b;
+}
+else if($operator === 'subtract')
+{
+    $result = $a - $b;
+}
+else if($operator === 'multiply')
+{
+    $result = $a * $b;
+}
+else if($operator === 'divide')
+{
+    $result = $a / $b;
+}
+else
 {
     // 400 : Bad Request
     http_response_code(400);
 
-    // จบการทำงานของไฟล์ทันทีเพราะ $operator ไม่ใช่เครื่องหมาย + และ -
+    // จบการทำงานของไฟล์ทันทีเพราะ $operator ไม่ใช่เครื่องหมาย + - * /
     die();
-}
-
-$result = 0;
-if($operator === '+')
-{
-    $result = $a + $b;
-}
-else
-{
-    $result = $a - $b;
 }
 
 $object =
