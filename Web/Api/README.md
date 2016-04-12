@@ -12,11 +12,30 @@
 **Demo 03 ถึง 05**  
 เป็นเนื้อหาที่เพิ่มระดับจาก 01, 02 โดยจะมีการเชื่อมต่อกับฐานข้อมูล MySQLi แบบง่ายๆ เพื่อให้เห็นภาพของ CRUD (Create, Read, Update และ Delete)
 
+**Demo 06**  
+ปรับโค้ดจาก 05 ในเรื่องของ Url ให้เรียกง่ายขึ้นโดยแบ่งงานตาม Request Method (POST, GET, PUT, DELETE)  
+จาก 
+- `POST` Demo05/01-Create.php
+- `GET`  Demo05/02-Read.php
+- `GET`  Demo05/03-ReadWithId.php
+- `POST` Demo05/04-Update.php
+- `POST` Demo05/05-Delete.php
+
+เป็น
+- `POST` Demo06/Posts.php
+- `GET`  Demo06/Posts.php
+- `GET`  Demo06/Posts.php?id={number}
+- `PUT`  Demo06/Posts.php?id={number}
+- `DELETE` Demo06/Posts.php?id={number}
+  
 **เอกสารประกอบ Demo 03 และ 04**  
 https://goo.gl/TZMc1H
 
 **เอกสารประกอบ Demo 05**  
 https://goo.gl/b526KX
+
+**เอกสารประกอบ Demo 06**  
+https://goo.gl/MQXQsO
   
 ---------
   
