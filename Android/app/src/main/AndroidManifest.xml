@@ -80,6 +80,10 @@
         </activity>
         <activity android:name="com.devdayo.demo03.Activity02ById">
         </activity>
+        <activity android:name="com.devdayo.demo03.Activity03">
+        </activity>
+        <activity android:name="com.devdayo.demo03.Activity04">
+        </activity>
     </application>
 
 </manifest>

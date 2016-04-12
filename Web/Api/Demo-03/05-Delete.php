@@ -66,7 +66,6 @@ if($result !== TRUE)
 {
     // 400 : Bad Request
     http_response_code(400);
-    die();
 }
 else
 {

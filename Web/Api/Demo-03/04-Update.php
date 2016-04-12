@@ -90,6 +90,7 @@ if($result !== TRUE)
     http_response_code(400);
 }
 else
+{
     // 200 : OK
     http_response_code(200);
 }

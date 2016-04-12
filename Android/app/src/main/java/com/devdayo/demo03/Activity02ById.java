@@ -180,14 +180,11 @@ public class Activity02ById extends AppCompatActivity
                 {
                     // แปลงสตริงเป็น JSONObject
                     JSONObject object = new JSONObject(s);
+                    Item item = Item.parse(object);
 
-                    String title = object.optString("title");
-                    String content = object.optString("content");
-                    String createdDate = object.optString("created_date");
-
-                    titleView.setText(title);
-                    contentView.setText(content);
-                    createdDateView.setText(createdDate);
+                    titleView.setText(item.getTitle());
+                    contentView.setText(item.getContent());
+                    createdDateView.setText(item.getCreatedDate());
                 }
                 // เมื่อมีการแปลงสตริงเป็น JSONArray ต้องดัก catch JSONException เสมอ
                 // เพราะสตริงอาจจะไม่ใช่ JSON Format ที่ถูกต้อง
