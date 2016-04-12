@@ -23,7 +23,7 @@ $b = $_GET['b'];
 // อ่านเรื่อง Array ได้ที่ : http://www.w3schools.com/php/php_arrays.asp
 $array =
 [
-    $_GET['a'], $_GET['b']
+    'Message from GET', $_GET['a'], $_GET['b']
 ];
 
 // อ่านเรื่อง header ได้ที่ : http://php.net/manual/en/function.header.php

@@ -19,7 +19,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST')
 // อ่านเรื่อง Array ได้ที่ : http://www.w3schools.com/php/php_arrays.asp
 $array =
 [
-    'Hello', 'World', '!', '!'
+    'Message from POST', 'Hello', 'World', '!', '!'
 ];
 
 // อ่านเรื่อง header ได้ที่ : http://php.net/manual/en/function.header.php

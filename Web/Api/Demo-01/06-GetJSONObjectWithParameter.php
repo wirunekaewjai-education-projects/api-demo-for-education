@@ -23,6 +23,7 @@ $b = $_GET['b'];
 // อ่านเรื่อง Associative Array ได้ที่ : http://www.w3schools.com/php/php_arrays.asp
 $object =
 [
+    'method'  => 'GET',
     'a' => $_GET['a'],
     'b' => $_GET['b']
 ];

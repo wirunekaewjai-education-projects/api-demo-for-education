@@ -17,7 +17,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST')
 }
 
 // http://www.w3schools.com/php/func_string_echo.asp
-echo 'Hello World!';
+echo 'Message from POST:: Hello World!';
 
 // 200 : OK
 http_response_code(200);

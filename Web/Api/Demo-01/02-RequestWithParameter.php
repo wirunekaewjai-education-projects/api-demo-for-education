@@ -6,6 +6,6 @@ $a = $_REQUEST['a'];
 $b = $_REQUEST['b'];
 
 // อ่านเรื่องฟังก์ชัน echo ได้ที่ : http://www.w3schools.com/php/func_string_echo.asp
-echo 'a: ' . $a . ', b: ' . $b;
+echo 'Message from Request:: a: ' . $a . ', b: ' . $b;
 
 ?>

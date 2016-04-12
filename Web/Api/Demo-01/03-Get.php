@@ -17,7 +17,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'GET')
 }
 
 // อ่านเรื่องฟังก์ชัน echo ได้ที่ : http://www.w3schools.com/php/func_string_echo.asp
-echo 'Hello World!';
+echo 'Message from GET:: Hello World!';
 
 // 200 : OK
 http_response_code(200);

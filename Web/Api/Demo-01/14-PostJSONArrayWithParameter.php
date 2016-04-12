@@ -23,7 +23,7 @@ $b = $_POST['b'];
 // อ่านเรื่อง Array ได้ที่ : http://www.w3schools.com/php/php_arrays.asp
 $array =
 [
-    $_POST['a'], $_POST['b']
+    'Message from POST', $_POST['a'], $_POST['b']
 ];
 
 // อ่านเรื่อง header ได้ที่ : http://php.net/manual/en/function.header.php

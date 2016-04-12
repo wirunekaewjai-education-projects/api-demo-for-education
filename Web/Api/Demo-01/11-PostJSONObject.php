@@ -19,6 +19,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST')
 // อ่านเรื่อง Associative Array ได้ที่ : http://www.w3schools.com/php/php_arrays.asp
 $object =
 [
+    'method'  => 'POST',
     'message' => 'Hello World!'
 ];
 
