@@ -37,7 +37,7 @@ https://goo.gl/b526KX
 - `PUT`  Demo06/Posts.php?id={number}
 - `DELETE` Demo06/Posts.php?id={number}
   
-**เอกสารประกอบ Demo 06**  
+**- เอกสารประกอบ Demo 06**  
 https://goo.gl/MQXQsO
   
 ---------  
