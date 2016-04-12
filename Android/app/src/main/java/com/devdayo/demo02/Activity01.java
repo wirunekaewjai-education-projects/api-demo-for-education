@@ -1,32 +1,50 @@
-package com.devdayo.postapp.demo01;
+package com.devdayo.demo02;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.devdayo.postapp.R;
+import com.devdayo.app.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-public class Activity04 extends AppCompatActivity
+public class Activity01 extends AppCompatActivity
 {
-    // ประกาศตัวแปรเพื่อไว้ใช้อ่านข้อมูลที่ผู้ใช้ได้กรอกไว้
+    // @Bind ใช้แทน findViewById ซึ่งจะต้องติดตั้งไลบรารี่ ButterKnife ก่อนใช้
+
+    @Bind(R.id.a_view)
     protected EditText aView;
+
+    @Bind(R.id.b_view)
     protected EditText bView;
 
-    // ประกาศตัวแปรเพื่อไว้ใช้กำหนดข้อความผลลัพธ์
+    @Bind(R.id.operator_spinner)
+    protected Spinner operatorSpinner;
+
+    @Bind(R.id.result_view)
     protected TextView resultView;
+
+    @Bind(R.id.json_view)
+    protected TextView jsonView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -34,13 +52,25 @@ public class Activity04 extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         // เชื่อม Activity กับ View XML (res/layout/...)
-        setContentView(R.layout.demo_01_activity_02);
+        setContentView(R.layout.demo_02_activity_01);
 
         // เชื่อมตัวแปรกับ View XML ตาม id ที่กำหนดไว้
-        resultView = (TextView) findViewById(R.id.result_view);
+        ButterKnife.bind(this);
 
-        aView = (EditText) findViewById(R.id.a_view);
-        bView = (EditText) findViewById(R.id.b_view);
+        // สร้าง Dropdown Item ของ Operator Spinner
+        ArrayList<String> operators = new ArrayList<>();
+        operators.add("add");
+        operators.add("subtract");
+        operators.add("multiply");
+        operators.add("divide");
+
+        // อ่านเรื่อง Spinner ได้ที่ http://devahoy.com/posts/android-spinner-example/
+        // กำหนดรูปแบบเลย์เอาต์ของ Item โดยใช้เลย์เอาต์จากไลบรารี่ที่แอนดรอยด์ทำไว้อยู่แล้ว
+        int spinner_layout = android.R.layout.simple_dropdown_item_1line;
+
+        // สร้างตัวเชื่อมระหว่าง Spinner กับ Items ด้วย ArrayAdapter
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, spinner_layout, operators);
+        operatorSpinner.setAdapter(adapter);
     }
 
     // ทำการผูกเมธอดเอาไว้ใน XML
@@ -68,13 +98,13 @@ public class Activity04 extends AppCompatActivity
                 /*
                     เก็บ Instance ของ Activity นี้ลงในตัวแปร Context
                     ซึ่ง AppCompatActivity สืบทอดจาก Activity และ Activity สืบทอดจาก Context
-                    ดังนั้น Activity04 ที่สืบทอด AppCompatActivity จึงสามารถเปลี่ยนตัวเองเป็น Context ได้
+                    ดังนั้น Activity01 ที่สืบทอด AppCompatActivity จึงสามารถเปลี่ยนตัวเองเป็น Context ได้
                     ตามหลัก Polymorphism (https://docs.oracle.com/javase/tutorial/java/IandI/polymorphism.html)
                  */
-                context = Activity04.this;
+                context = Activity01.this;
 
                 // แสดง ProgressDialog
-                dialog = ProgressDialog.show(context, "Demo 01", "Executing...");
+                dialog = ProgressDialog.show(context, "Demo 02", "Executing...");
             }
 
             // เป็นการทำงานใน Background Thread ซึ่งมีไว้เพื่อทำงานเล็กหรือใหญ่โดยไม่ทำให้ UI กระตุก
@@ -103,11 +133,11 @@ public class Activity04 extends AppCompatActivity
                 String base_url = context.getString(R.string.url);
 
                 // ทำการกำหนด url ที่ต้องการเรียก HTTP Request
-                String url = base_url + "/Demo-01/04-GetWithParameter.php";
+                String url = base_url + "/Demo-02/01-GetJSONObjectCalculator.php";
 
                 // https://en.wikipedia.org/wiki/Query_string
                 // เพิ่ม queryString (params คือ สตริงที่ส่งมาตอน execute ซึ่ง length ของ params จะเท่ากับจำนวนสตริงที่ส่งมา)
-                url = url + "?a=" + params[0] + "&b=" + params[1];
+                url = url + "?a=" + params[0] + "&b=" + params[1] + "&operator=" + params[2];
 
                 /*
                     ลำดับต่อไปจะใช้ไลบรารี่ OkHttp3 ในการใช้งาน HTTP Request
@@ -156,8 +186,27 @@ public class Activity04 extends AppCompatActivity
             {
                 super.onPostExecute(s);
 
+                try
+                {
+                    // แปลงสตริงเป็น JSONObject
+                    JSONObject object = new JSONObject(s);
+
+                    // อ่านค่าจาก key "result"
+                    String result = object.optString("result");
+
+                    // อัพเดทผลลัพธ์
+                    resultView.setText(result);
+                }
+                // เมื่อมีการแปลงสตริงเป็น JSONObject ต้องดัก catch JSONException เสมอ
+                // เพราะสตริงอาจจะไม่ใช่ JSON Format ที่ถูกต้อง
+                catch (JSONException e)
+                {
+                    // แสดงผล Error ใน Log Monitor
+                    e.printStackTrace();
+                }
+
                 // อัพเดทข้อความ
-                resultView.setText(s);
+                jsonView.setText(s);
 
                 // ปิด ProgressDialog
                 dialog.dismiss();
@@ -167,15 +216,19 @@ public class Activity04 extends AppCompatActivity
         // อ่านค่าที่ผู้ใช้กรอกแล้วแปลงเป็นสตริง
         String a = aView.getText().toString();
         String b = bView.getText().toString();
+        String op = operatorSpinner.getSelectedItem().toString();
 
-        // สั่งให้ AsyncTask เริ่มต้นทำงาน โดยส่งสตริง a, b ไปด้วย
-        task.execute(a, b);
+        // สั่งให้ AsyncTask เริ่มต้นทำงาน โดยส่งสตริง a, b และ operator ไปด้วย
+        task.execute(a, b, op);
     }
 
     // ทำการผูกเมธอดเอาไว้ใน XML
     public void onClearClick(View view)
     {
         // ลบข้อความ
+        aView.setText("");
+        bView.setText("");
         resultView.setText("");
+        jsonView.setText("");
     }
 }

@@ -75,7 +75,8 @@ $object =
     'a' => $a,
     'b' => $b,
     'operator' => $operator,
-    'result' => $result
+    'result' => $result,
+    'method' => 'POST'
 ];
 
 // อ่านเรื่อง header ได้ที่ : http://php.net/manual/en/function.header.php

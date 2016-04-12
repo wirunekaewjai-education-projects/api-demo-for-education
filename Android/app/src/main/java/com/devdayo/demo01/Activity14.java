@@ -1,4 +1,4 @@
-package com.devdayo.postapp.demo01;
+package com.devdayo.demo01;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.devdayo.postapp.R;
+import com.devdayo.app.R;
 
 import java.io.IOException;
 
@@ -20,7 +20,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-public class Activity10 extends AppCompatActivity
+public class Activity14 extends AppCompatActivity
 {
     // ประกาศตัวแปรเพื่อไว้ใช้อ่านข้อมูลที่ผู้ใช้ได้กรอกไว้
     protected EditText aView;
@@ -69,10 +69,10 @@ public class Activity10 extends AppCompatActivity
                 /*
                     เก็บ Instance ของ Activity นี้ลงในตัวแปร Context
                     ซึ่ง AppCompatActivity สืบทอดจาก Activity และ Activity สืบทอดจาก Context
-                    ดังนั้น Activity10 ที่สืบทอด AppCompatActivity จึงสามารถเปลี่ยนตัวเองเป็น Context ได้
+                    ดังนั้น Activity14 ที่สืบทอด AppCompatActivity จึงสามารถเปลี่ยนตัวเองเป็น Context ได้
                     ตามหลัก Polymorphism (https://docs.oracle.com/javase/tutorial/java/IandI/polymorphism.html)
                  */
-                context = Activity10.this;
+                context = Activity14.this;
 
                 // แสดง ProgressDialog
                 dialog = ProgressDialog.show(context, "Demo 01", "Executing...");
@@ -104,7 +104,7 @@ public class Activity10 extends AppCompatActivity
                 String base_url = context.getString(R.string.url);
 
                 // ทำการกำหนด url ที่ต้องการเรียก HTTP Request
-                String url = base_url + "/Demo-01/10-PostWithParameter.php";
+                String url = base_url + "/Demo-01/14-PostJSONArrayWithParameter.php";
 
                 /*
                     ลำดับต่อไปจะใช้ไลบรารี่ OkHttp3 ในการใช้งาน HTTP Request

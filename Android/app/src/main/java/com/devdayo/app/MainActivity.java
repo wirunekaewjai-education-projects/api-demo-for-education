@@ -1,4 +1,4 @@
-package com.devdayo.postapp;
+package com.devdayo.app;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.devdayo.postapp.demo01.*;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -62,22 +60,30 @@ public class MainActivity extends AppCompatActivity
     private static final Object[][] links =
             {
                     { "Demo 01" },
-                    { "01. Request", Activity01.class },
-                    { "02. Request With Params", Activity02.class },
+                    { "01. Request", com.devdayo.demo01.Activity01.class },
+                    { "02. Request With Params", com.devdayo.demo01.Activity02.class },
 
-                    { "03. GET", Activity03.class },
-                    { "04. GET With Params", Activity04.class },
-                    { "05. GET JSON Object", Activity05.class },
-                    { "06. GET JSON Object With Params", Activity06.class },
-                    { "07. GET JSON Array", Activity07.class },
-                    { "08. GET JSON Array With Params", Activity08.class },
+                    { "03. GET", com.devdayo.demo01.Activity03.class },
+                    { "04. GET With Params", com.devdayo.demo01.Activity04.class },
+                    { "05. GET JSON Object", com.devdayo.demo01.Activity05.class },
+                    { "06. GET JSON Object With Params", com.devdayo.demo01.Activity06.class },
+                    { "07. GET JSON Array", com.devdayo.demo01.Activity07.class },
+                    { "08. GET JSON Array With Params", com.devdayo.demo01.Activity08.class },
 
-                    { "09. POST", Activity09.class },
-                    { "10. POST With Params", Activity10.class },
-                    { "11. POST JSON Object", Activity11.class },
-                    { "12. POST JSON Object With Params", Activity12.class },
-                    { "13. POST JSON Array", Activity13.class },
-                    { "14. POST JSON Array With Params", Activity14.class },
+                    { "09. POST", com.devdayo.demo01.Activity09.class },
+                    { "10. POST With Params", com.devdayo.demo01.Activity10.class },
+                    { "11. POST JSON Object", com.devdayo.demo01.Activity11.class },
+                    { "12. POST JSON Object With Params", com.devdayo.demo01.Activity12.class },
+                    { "13. POST JSON Array", com.devdayo.demo01.Activity13.class },
+                    { "14. POST JSON Array With Params", com.devdayo.demo01.Activity14.class },
+                    { "----" },
+
+                    { "Demo 02" },
+                    { "01. GET JSON Object Calculator", com.devdayo.demo02.Activity01.class },
+                    { "02. GET JSON Array Sorter", com.devdayo.demo02.Activity02.class },
+
+                    { "03. POST JSON Object Calculator", com.devdayo.demo02.Activity03.class },
+                    { "04. POST JSON Array Sorter", com.devdayo.demo02.Activity04.class },
                     { "----" },
             };
 }

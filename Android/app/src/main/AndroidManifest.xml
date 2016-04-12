@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.devdayo.postapp"
+<manifest package="com.devdayo.app"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -20,35 +20,48 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".demo01.Activity01">
+
+        <!-- Demo 01 -->
+        <!-- REQUEST -->
+        <activity android:name="com.devdayo.demo01.Activity01">
         </activity>
-        <activity android:name=".demo01.Activity02">
+        <activity android:name="com.devdayo.demo01.Activity02">
         </activity>
-        <activity android:name=".demo01.Activity03">
+        <!-- GET -->
+        <activity android:name="com.devdayo.demo01.Activity03">
         </activity>
-        <activity android:name=".demo01.Activity04">
+        <activity android:name="com.devdayo.demo01.Activity04">
         </activity>
-        <activity android:name=".demo01.Activity05">
+        <activity android:name="com.devdayo.demo01.Activity05">
         </activity>
-        <activity android:name=".demo01.Activity06">
+        <activity android:name="com.devdayo.demo01.Activity06">
         </activity>
-        <activity android:name=".demo01.Activity07">
+        <activity android:name="com.devdayo.demo01.Activity07">
         </activity>
-        <activity android:name=".demo01.Activity08">
+        <activity android:name="com.devdayo.demo01.Activity08">
+        </activity>
+        <!-- POST -->
+        <activity android:name="com.devdayo.demo01.Activity09">
+        </activity>
+        <activity android:name="com.devdayo.demo01.Activity10">
+        </activity>
+        <activity android:name="com.devdayo.demo01.Activity11">
+        </activity>
+        <activity android:name="com.devdayo.demo01.Activity12">
+        </activity>
+        <activity android:name="com.devdayo.demo01.Activity13">
+        </activity>
+        <activity android:name="com.devdayo.demo01.Activity14">
         </activity>
 
 
-        <activity android:name=".demo01.Activity09">
+        <activity android:name="com.devdayo.demo02.Activity01">
         </activity>
-        <activity android:name=".demo01.Activity10">
+        <activity android:name="com.devdayo.demo02.Activity02">
         </activity>
-        <activity android:name=".demo01.Activity11">
+        <activity android:name="com.devdayo.demo02.Activity03">
         </activity>
-        <activity android:name=".demo01.Activity12">
-        </activity>
-        <activity android:name=".demo01.Activity13">
-        </activity>
-        <activity android:name=".demo01.Activity14">
+        <activity android:name="com.devdayo.demo02.Activity04">
         </activity>
     </application>
 

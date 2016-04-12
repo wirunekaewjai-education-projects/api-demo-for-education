@@ -1,4 +1,4 @@
-package com.devdayo.postapp;
+package com.devdayo.app;
 
 import org.junit.Test;
 

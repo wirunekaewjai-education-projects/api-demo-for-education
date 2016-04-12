@@ -1,4 +1,4 @@
-package com.devdayo.postapp.demo01;
+package com.devdayo.demo01;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -6,20 +6,26 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
-import com.devdayo.postapp.R;
+import com.devdayo.app.R;
 
 import java.io.IOException;
 
 import okhttp3.Call;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-public class Activity03 extends AppCompatActivity
+public class Activity12 extends AppCompatActivity
 {
+    // ประกาศตัวแปรเพื่อไว้ใช้อ่านข้อมูลที่ผู้ใช้ได้กรอกไว้
+    protected EditText aView;
+    protected EditText bView;
+
     // ประกาศตัวแปรเพื่อไว้ใช้กำหนดข้อความผลลัพธ์
     protected TextView resultView;
 
@@ -28,26 +34,28 @@ public class Activity03 extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
 
-        // เชื่อม Activity กับ View XML (res/layout/...) โดยใช้แบบเดียวกับ Activity01
-        setContentView(R.layout.demo_01_activity_01);
+        // เชื่อม Activity กับ View XML (res/layout/...)
+        setContentView(R.layout.demo_01_activity_02);
 
         // เชื่อมตัวแปรกับ View XML ตาม id ที่กำหนดไว้
         resultView = (TextView) findViewById(R.id.result_view);
+
+        aView = (EditText) findViewById(R.id.a_view);
+        bView = (EditText) findViewById(R.id.b_view);
     }
 
     // ทำการผูกเมธอดเอาไว้ใน XML
     public void onExecuteClick(View view)
     {
         // อ่านเรื่อง AsyncTask ได้ที่ http://devahoy.com/posts/android-asynctask-tutorial/
-        // <Void, Void, String> => Parameter, Progress, Result
-        // ในที่นี้ไม่มี Parameter ไม่มีการคำนวน Progress และ return ผลลัพธ์เป็นสตริง
-        // (ดูความแตกต่างได้ใน demo01/Activity02)
-        AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>()
+        // <String, Void, String> => Parameter, Progress, Result
+        // ในที่นี้ต้องการส่งสตริงเป็น Parameter ไม่มีการคำนวน Progress และ return ผลลัพธ์เป็นสตริง
+        AsyncTask<String, Void, String> task = new AsyncTask<String, Void, String>()
         {
             private Context context;
 
-            // อ่านเรื่อง ProgressDialog
-            // ได้ที่ https://examples.javacodegeeks.com/android/core/ui/progressdialog/android-progressdialog-example/
+            // อ่านเรื่อง ProgressDialog ได้ที่
+            // https://examples.javacodegeeks.com/android/core/ui/progressdialog/android-progressdialog-example/
 
             // ประกาศตัวแปรไว้ใช้เก็บ ProgressDialog
             private ProgressDialog dialog;
@@ -61,19 +69,18 @@ public class Activity03 extends AppCompatActivity
                 /*
                     เก็บ Instance ของ Activity นี้ลงในตัวแปร Context
                     ซึ่ง AppCompatActivity สืบทอดจาก Activity และ Activity สืบทอดจาก Context
-                    ดังนั้น Activity03 ที่สืบทอด AppCompatActivity จึงสามารถเปลี่ยนตัวเองเป็น Context ได้
+                    ดังนั้น Activity12 ที่สืบทอด AppCompatActivity จึงสามารถเปลี่ยนตัวเองเป็น Context ได้
                     ตามหลัก Polymorphism (https://docs.oracle.com/javase/tutorial/java/IandI/polymorphism.html)
                  */
-                context = Activity03.this;
+                context = Activity12.this;
 
                 // แสดง ProgressDialog
                 dialog = ProgressDialog.show(context, "Demo 01", "Executing...");
             }
 
             // เป็นการทำงานใน Background Thread ซึ่งมีไว้เพื่อทำงานเล็กหรือใหญ่โดยไม่ทำให้ UI กระตุก
-            // Void... params อาจจะงงตรง ... ไปอ่านได้ที่ http://docs.oracle.com/javase/tutorial/java/javaOO/arguments.html#varargs
             @Override
-            protected String doInBackground(Void... params)
+            protected String doInBackground(String... params)
             {
                 try
                 {
@@ -93,24 +100,32 @@ public class Activity03 extends AppCompatActivity
                     e.printStackTrace();
                 }
 
-
                 // อ่านสตริง url จาก XML (res/values/string.xml)
                 String base_url = context.getString(R.string.url);
 
                 // ทำการกำหนด url ที่ต้องการเรียก HTTP Request
-                String url = base_url + "/Demo-01/03-Get.php";
+                String url = base_url + "/Demo-01/12-PostJSONObjectWithParameter.php";
 
                 /*
                     ลำดับต่อไปจะใช้ไลบรารี่ OkHttp3 ในการใช้งาน HTTP Request
                     http://www.artit-k.com/dev-okhttp-library-for-android/
                 */
 
+                // สร้าง Request Body แบบ Form ด้วย FormBody.Builder
+                FormBody.Builder formBodyBuilder = new FormBody.Builder();
+
+                // ใส่ข้อมูลลงในฟอร์ม
+                formBodyBuilder.add("a", params[0]);
+                formBodyBuilder.add("b", params[1]);
+
+                FormBody formBody = formBodyBuilder.build();
+
                 // สร้าง Request Builder และกำหนด URL ปลายทาง
                 Request.Builder requestBuilder = new Request.Builder();
                 requestBuilder.url(url);
 
-                // กำหนดให้ HTTP Request Method เป็น GET
-                requestBuilder.get();
+                // กำหนดให้ HTTP Request Method เป็น POST และส่งข้อมูลจากฟอร์มไปด้วย
+                requestBuilder.post(formBody);
 
                 // ใช้ Request Builder สร้าง Request อีกที
                 Request request = requestBuilder.build();
@@ -155,8 +170,12 @@ public class Activity03 extends AppCompatActivity
             }
         };
 
-        // สั่งให้ AsyncTask เริ่มต้นทำงาน
-        task.execute();
+        // อ่านค่าที่ผู้ใช้กรอกแล้วแปลงเป็นสตริง
+        String a = aView.getText().toString();
+        String b = bView.getText().toString();
+
+        // สั่งให้ AsyncTask เริ่มต้นทำงาน โดยส่งสตริง a, b ไปด้วย
+        task.execute(a, b);
     }
 
     // ทำการผูกเมธอดเอาไว้ใน XML
@@ -165,5 +184,4 @@ public class Activity03 extends AppCompatActivity
         // ลบข้อความ
         resultView.setText("");
     }
-
 }

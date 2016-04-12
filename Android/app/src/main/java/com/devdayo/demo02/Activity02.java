@@ -1,18 +1,25 @@
-package com.devdayo.postapp.demo01;
+package com.devdayo.demo02;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.devdayo.postapp.R;
+import com.devdayo.app.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -21,12 +28,16 @@ import okhttp3.ResponseBody;
 
 public class Activity02 extends AppCompatActivity
 {
-    // ประกาศตัวแปรเพื่อไว้ใช้อ่านข้อมูลที่ผู้ใช้ได้กรอกไว้
-    protected EditText aView;
-    protected EditText bView;
+    // @Bind ใช้แทน findViewById ซึ่งจะต้องติดตั้งไลบรารี่ ButterKnife ก่อนใช้
 
-    // ประกาศตัวแปรเพื่อไว้ใช้กำหนดข้อความผลลัพธ์
+    @Bind(R.id.spinner)
+    protected Spinner spinner;
+
+    @Bind(R.id.result_view)
     protected TextView resultView;
+
+    @Bind(R.id.json_view)
+    protected TextView jsonView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -34,13 +45,25 @@ public class Activity02 extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         // เชื่อม Activity กับ View XML (res/layout/...)
-        setContentView(R.layout.demo_01_activity_02);
+        setContentView(R.layout.demo_02_activity_02);
 
         // เชื่อมตัวแปรกับ View XML ตาม id ที่กำหนดไว้
-        resultView = (TextView) findViewById(R.id.result_view);
+        ButterKnife.bind(this);
 
-        aView = (EditText) findViewById(R.id.a_view);
-        bView = (EditText) findViewById(R.id.b_view);
+        // สร้าง Dropdown Item ของ Spinner
+        ArrayList<String> items = new ArrayList<>();
+        items.add("3,2,1,0");
+        items.add("a,e,d,1,2,3");
+        items.add("one,three,two,seven,five,four,ten");
+        items.add("add,subtract,multiply,divide");
+
+        // อ่านเรื่อง Spinner ได้ที่ http://devahoy.com/posts/android-spinner-example/
+        // กำหนดรูปแบบเลย์เอาต์ของ Item โดยใช้เลย์เอาต์จากไลบรารี่ที่แอนดรอยด์ทำไว้อยู่แล้ว
+        int spinner_layout = android.R.layout.simple_dropdown_item_1line;
+
+        // สร้างตัวเชื่อมระหว่าง Spinner กับ Items ด้วย ArrayAdapter
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, spinner_layout, items);
+        spinner.setAdapter(adapter);
     }
 
     // ทำการผูกเมธอดเอาไว้ใน XML
@@ -74,7 +97,7 @@ public class Activity02 extends AppCompatActivity
                 context = Activity02.this;
 
                 // แสดง ProgressDialog
-                dialog = ProgressDialog.show(context, "Demo 01", "Executing...");
+                dialog = ProgressDialog.show(context, "Demo 02", "Executing...");
             }
 
             // เป็นการทำงานใน Background Thread ซึ่งมีไว้เพื่อทำงานเล็กหรือใหญ่โดยไม่ทำให้ UI กระตุก
@@ -103,11 +126,11 @@ public class Activity02 extends AppCompatActivity
                 String base_url = context.getString(R.string.url);
 
                 // ทำการกำหนด url ที่ต้องการเรียก HTTP Request
-                String url = base_url + "/Demo-01/02-RequestWithParameter.php";
+                String url = base_url + "/Demo-02/02-GetJSONArraySorter.php";
 
                 // https://en.wikipedia.org/wiki/Query_string
                 // เพิ่ม queryString (params คือ สตริงที่ส่งมาตอน execute ซึ่ง length ของ params จะเท่ากับจำนวนสตริงที่ส่งมา)
-                url = url + "?a=" + params[0] + "&b=" + params[1];
+                url = url + "?items=" + params[0];
 
                 /*
                     ลำดับต่อไปจะใช้ไลบรารี่ OkHttp3 ในการใช้งาน HTTP Request
@@ -117,6 +140,9 @@ public class Activity02 extends AppCompatActivity
                 // สร้าง Request Builder และกำหนด URL ปลายทาง
                 Request.Builder requestBuilder = new Request.Builder();
                 requestBuilder.url(url);
+
+                // กำหนดให้ HTTP Request Method เป็น GET
+                requestBuilder.get();
 
                 // ใช้ Request Builder สร้าง Request อีกที
                 Request request = requestBuilder.build();
@@ -153,8 +179,39 @@ public class Activity02 extends AppCompatActivity
             {
                 super.onPostExecute(s);
 
+                try
+                {
+                    // แปลงสตริงเป็น JSONArray
+                    JSONArray array = new JSONArray(s);
+
+                    String text = "";
+
+                    // เก็บค่า length ของ JSONArray
+                    int length = array.length();
+
+                    // วนลูปไปทีละ index
+                    for (int i = 0; i < length; i++)
+                    {
+                        // ต่อสตริงด้วยข้อมูลของ index ที่ i
+                        text += array.optString(i);
+
+                        // ขึ้นบรรทัดใหม่
+                        text += "\r\n";
+                    }
+
+                    // อัพเดทผลลัพธ์
+                    resultView.setText(text);
+                }
+                // เมื่อมีการแปลงสตริงเป็น JSONObject ต้องดัก catch JSONException เสมอ
+                // เพราะสตริงอาจจะไม่ใช่ JSON Format ที่ถูกต้อง
+                catch (JSONException e)
+                {
+                    // แสดงผล Error ใน Log Monitor
+                    e.printStackTrace();
+                }
+
                 // อัพเดทข้อความ
-                resultView.setText(s);
+                jsonView.setText(s);
 
                 // ปิด ProgressDialog
                 dialog.dismiss();
@@ -162,11 +219,10 @@ public class Activity02 extends AppCompatActivity
         };
 
         // อ่านค่าที่ผู้ใช้กรอกแล้วแปลงเป็นสตริง
-        String a = aView.getText().toString();
-        String b = bView.getText().toString();
+        String items = spinner.getSelectedItem().toString();
 
-        // สั่งให้ AsyncTask เริ่มต้นทำงาน โดยส่งสตริง a, b ไปด้วย
-        task.execute(a, b);
+        // สั่งให้ AsyncTask เริ่มต้นทำงาน โดยส่งสตริง a, b และ operator ไปด้วย
+        task.execute(items);
     }
 
     // ทำการผูกเมธอดเอาไว้ใน XML
@@ -174,5 +230,6 @@ public class Activity02 extends AppCompatActivity
     {
         // ลบข้อความ
         resultView.setText("");
+        jsonView.setText("");
     }
 }

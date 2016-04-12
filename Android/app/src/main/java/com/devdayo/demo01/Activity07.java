@@ -1,4 +1,4 @@
-package com.devdayo.postapp.demo01;
+package com.devdayo.demo01;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -8,18 +8,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.devdayo.postapp.R;
+import com.devdayo.app.R;
 
 import java.io.IOException;
 
 import okhttp3.Call;
-import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-public class Activity13 extends AppCompatActivity
+public class Activity07 extends AppCompatActivity
 {
     // ประกาศตัวแปรเพื่อไว้ใช้กำหนดข้อความผลลัพธ์
     protected TextView resultView;
@@ -62,10 +61,10 @@ public class Activity13 extends AppCompatActivity
                 /*
                     เก็บ Instance ของ Activity นี้ลงในตัวแปร Context
                     ซึ่ง AppCompatActivity สืบทอดจาก Activity และ Activity สืบทอดจาก Context
-                    ดังนั้น Activity13 ที่สืบทอด AppCompatActivity จึงสามารถเปลี่ยนตัวเองเป็น Context ได้
+                    ดังนั้น Activity07 ที่สืบทอด AppCompatActivity จึงสามารถเปลี่ยนตัวเองเป็น Context ได้
                     ตามหลัก Polymorphism (https://docs.oracle.com/javase/tutorial/java/IandI/polymorphism.html)
                  */
-                context = Activity13.this;
+                context = Activity07.this;
 
                 // แสดง ProgressDialog
                 dialog = ProgressDialog.show(context, "Demo 01", "Executing...");
@@ -99,23 +98,19 @@ public class Activity13 extends AppCompatActivity
                 String base_url = context.getString(R.string.url);
 
                 // ทำการกำหนด url ที่ต้องการเรียก HTTP Request
-                String url = base_url + "/Demo-01/13-PostJSONArray.php";
+                String url = base_url + "/Demo-01/07-GetJSONArray.php";
 
                 /*
                     ลำดับต่อไปจะใช้ไลบรารี่ OkHttp3 ในการใช้งาน HTTP Request
                     http://www.artit-k.com/dev-okhttp-library-for-android/
                 */
 
-                // สร้าง Request Body แบบ Form ด้วย FormBody.Builder
-                FormBody.Builder formBodyBuilder = new FormBody.Builder();
-                FormBody formBody = formBodyBuilder.build();
-
                 // สร้าง Request Builder และกำหนด URL ปลายทาง
                 Request.Builder requestBuilder = new Request.Builder();
                 requestBuilder.url(url);
 
-                // กำหนดให้ HTTP Request Method เป็น POST และไม่มีข้อมูลใดๆ ส่งไป
-                requestBuilder.post(formBody);
+                // กำหนดให้ HTTP Request Method เป็น GET
+                requestBuilder.get();
 
                 // ใช้ Request Builder สร้าง Request อีกที
                 Request request = requestBuilder.build();

@@ -1,4 +1,4 @@
-package com.devdayo.postapp.demo01;
+package com.devdayo.demo01;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.devdayo.postapp.R;
+import com.devdayo.app.R;
 
 import java.io.IOException;
 
@@ -19,7 +19,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-public class Activity06 extends AppCompatActivity
+public class Activity08 extends AppCompatActivity
 {
     // ประกาศตัวแปรเพื่อไว้ใช้อ่านข้อมูลที่ผู้ใช้ได้กรอกไว้
     protected EditText aView;
@@ -68,10 +68,10 @@ public class Activity06 extends AppCompatActivity
                 /*
                     เก็บ Instance ของ Activity นี้ลงในตัวแปร Context
                     ซึ่ง AppCompatActivity สืบทอดจาก Activity และ Activity สืบทอดจาก Context
-                    ดังนั้น Activity06 ที่สืบทอด AppCompatActivity จึงสามารถเปลี่ยนตัวเองเป็น Context ได้
+                    ดังนั้น Activity08 ที่สืบทอด AppCompatActivity จึงสามารถเปลี่ยนตัวเองเป็น Context ได้
                     ตามหลัก Polymorphism (https://docs.oracle.com/javase/tutorial/java/IandI/polymorphism.html)
                  */
-                context = Activity06.this;
+                context = Activity08.this;
 
                 // แสดง ProgressDialog
                 dialog = ProgressDialog.show(context, "Demo 01", "Executing...");
@@ -103,7 +103,7 @@ public class Activity06 extends AppCompatActivity
                 String base_url = context.getString(R.string.url);
 
                 // ทำการกำหนด url ที่ต้องการเรียก HTTP Request
-                String url = base_url + "/Demo-01/06-GetJSONObjectWithParameter.php";
+                String url = base_url + "/Demo-01/08-GetJSONArrayWithParameter.php";
 
                 // https://en.wikipedia.org/wiki/Query_string
                 // เพิ่ม queryString (params คือ สตริงที่ส่งมาตอน execute ซึ่ง length ของ params จะเท่ากับจำนวนสตริงที่ส่งมา)

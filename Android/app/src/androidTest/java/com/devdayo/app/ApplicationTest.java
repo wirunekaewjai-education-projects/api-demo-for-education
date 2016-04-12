@@ -1,4 +1,4 @@
-package com.devdayo.postapp;
+package com.devdayo.app;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

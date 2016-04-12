@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">PostApp</string>
+    <string name="app_name">Demo App</string>
     <string name="action_settings">Settings</string>
 
     <string name="url">http://192.168.1.60:80/api-demo/Web/Api</string>
+    <string name="title_activity_01">Activity01</string>
 </resources>

@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="com.devdayo.postapp.demo01.Activity01">
+    tools:context="com.devdayo.app.demo01.Activity01">
 
     <LinearLayout
         android:orientation="horizontal"
