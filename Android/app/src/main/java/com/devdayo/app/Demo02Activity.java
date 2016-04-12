@@ -7,7 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-public class MainActivity extends AppCompatActivity
+import com.devdayo.demo02.*;
+
+public class Demo02Activity extends AppCompatActivity
 {
     // ประกาศตัวแปรเพื่อไว้ใช้เพิ่มปุ่มเมนู
     LinearLayout linearLayout;
@@ -81,8 +83,10 @@ public class MainActivity extends AppCompatActivity
     // สร้างตัวแปรไว้ใช้เป็นข้อมูลเมนู
     private static final Object[][] links =
             {
-                    { "Demo 01", Demo01Activity.class },
-                    { "Demo 02", Demo02Activity.class },
-                    { "Demo 03", Demo03Activity.class },
+                    { "01. GET JSON Object Calculator", Activity01.class },
+                    { "02. GET JSON Array Sorter", Activity02.class },
+
+                    { "03. POST JSON Object Calculator", Activity03.class },
+                    { "04. POST JSON Array Sorter", Activity04.class },
             };
 }

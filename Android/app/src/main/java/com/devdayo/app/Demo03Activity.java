@@ -7,7 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-public class MainActivity extends AppCompatActivity
+import com.devdayo.demo03.*;
+
+/**
+ * Created by Wirune on 4/12/2016.
+ */
+public class Demo03Activity extends AppCompatActivity
 {
     // ประกาศตัวแปรเพื่อไว้ใช้เพิ่มปุ่มเมนู
     LinearLayout linearLayout;
@@ -81,8 +86,10 @@ public class MainActivity extends AppCompatActivity
     // สร้างตัวแปรไว้ใช้เป็นข้อมูลเมนู
     private static final Object[][] links =
             {
-                    { "Demo 01", Demo01Activity.class },
-                    { "Demo 02", Demo02Activity.class },
-                    { "Demo 03", Demo03Activity.class },
+                    { "01. Create", Activity01.class },
+                    { "02. Read", Activity02.class },
+//
+//                    { "03. Update", Activity03.class },
+//                    { "04. Delete", Activity04.class },
             };
 }

@@ -22,8 +22,8 @@ import okhttp3.ResponseBody;
 public class Activity04 extends AppCompatActivity
 {
     // ประกาศตัวแปรเพื่อไว้ใช้อ่านข้อมูลที่ผู้ใช้ได้กรอกไว้
-    protected EditText aView;
-    protected EditText bView;
+    EditText aView;
+    EditText bView;
 
     // ประกาศตัวแปรเพื่อไว้ใช้กำหนดข้อความผลลัพธ์
     protected TextView resultView;

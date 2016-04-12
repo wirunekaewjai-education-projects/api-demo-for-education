@@ -32,19 +32,19 @@ public class Activity01 extends AppCompatActivity
     // @Bind ใช้แทน findViewById ซึ่งจะต้องติดตั้งไลบรารี่ ButterKnife ก่อนใช้
 
     @Bind(R.id.a_view)
-    protected EditText aView;
+    EditText aView;
 
     @Bind(R.id.b_view)
-    protected EditText bView;
+    EditText bView;
 
     @Bind(R.id.operator_spinner)
-    protected Spinner operatorSpinner;
+    Spinner operatorSpinner;
 
     @Bind(R.id.result_view)
-    protected TextView resultView;
+    TextView resultView;
 
     @Bind(R.id.json_view)
-    protected TextView jsonView;
+    TextView jsonView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

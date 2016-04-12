@@ -32,13 +32,13 @@ public class Activity04 extends AppCompatActivity
     // @Bind ใช้แทน findViewById ซึ่งจะต้องติดตั้งไลบรารี่ ButterKnife ก่อนใช้
 
     @Bind(R.id.spinner)
-    protected Spinner spinner;
+    Spinner spinner;
 
     @Bind(R.id.result_view)
-    protected TextView resultView;
+    TextView resultView;
 
     @Bind(R.id.json_view)
-    protected TextView jsonView;
+    TextView jsonView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

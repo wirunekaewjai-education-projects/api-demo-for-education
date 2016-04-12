@@ -22,7 +22,7 @@ import okhttp3.ResponseBody;
 public class Activity09 extends AppCompatActivity
 {
     // ประกาศตัวแปรเพื่อไว้ใช้กำหนดข้อความผลลัพธ์
-    protected TextView resultView;
+    TextView resultView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

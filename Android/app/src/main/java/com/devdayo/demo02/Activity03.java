@@ -33,19 +33,19 @@ public class Activity03 extends AppCompatActivity
     // @Bind ใช้แทน findViewById ซึ่งจะต้องติดตั้งไลบรารี่ ButterKnife ก่อนใช้
 
     @Bind(R.id.a_view)
-    protected EditText aView;
+    EditText aView;
 
     @Bind(R.id.b_view)
-    protected EditText bView;
+    EditText bView;
 
     @Bind(R.id.operator_spinner)
-    protected Spinner operatorSpinner;
+    Spinner operatorSpinner;
 
     @Bind(R.id.result_view)
-    protected TextView resultView;
+    TextView resultView;
 
     @Bind(R.id.json_view)
-    protected TextView jsonView;
+    TextView jsonView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -135,10 +135,6 @@ public class Activity03 extends AppCompatActivity
 
                 // ทำการกำหนด url ที่ต้องการเรียก HTTP Request
                 String url = base_url + "/Demo-02/03-PostJSONObjectCalculator.php";
-
-                // https://en.wikipedia.org/wiki/Query_string
-                // เพิ่ม queryString (params คือ สตริงที่ส่งมาตอน execute ซึ่ง length ของ params จะเท่ากับจำนวนสตริงที่ส่งมา)
-                url = url + "?a=" + params[0] + "&b=" + params[1] + "&operator=" + params[2];
 
                 /*
                     ลำดับต่อไปจะใช้ไลบรารี่ OkHttp3 ในการใช้งาน HTTP Request

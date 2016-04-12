@@ -20,6 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".Demo01Activity">
+        </activity>
+        <activity android:name=".Demo02Activity">
+        </activity>
+        <activity android:name=".Demo03Activity">
+        </activity>
 
         <!-- Demo 01 -->
         <!-- REQUEST -->
@@ -54,14 +60,25 @@
         <activity android:name="com.devdayo.demo01.Activity14">
         </activity>
 
-
+        <!-- Demo 02 -->
+        <!-- GET -->
         <activity android:name="com.devdayo.demo02.Activity01">
         </activity>
         <activity android:name="com.devdayo.demo02.Activity02">
         </activity>
+        <!-- POST -->
         <activity android:name="com.devdayo.demo02.Activity03">
         </activity>
         <activity android:name="com.devdayo.demo02.Activity04">
+        </activity>
+
+        <!-- Demo 03 -->
+        <!-- CRUD -->
+        <activity android:name="com.devdayo.demo03.Activity01">
+        </activity>
+        <activity android:name="com.devdayo.demo03.Activity02">
+        </activity>
+        <activity android:name="com.devdayo.demo03.Activity02ById">
         </activity>
     </application>
 

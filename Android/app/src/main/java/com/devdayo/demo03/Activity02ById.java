@@ -1,54 +1,70 @@
-package com.devdayo.demo01;
+package com.devdayo.demo03;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.devdayo.app.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import okhttp3.Call;
-import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-public class Activity13 extends AppCompatActivity
+/**
+ * Created by Wirune on 4/12/2016.
+ */
+public class Activity02ById extends AppCompatActivity
 {
-    // ประกาศตัวแปรเพื่อไว้ใช้กำหนดข้อความผลลัพธ์
-    TextView resultView;
+    @Bind(R.id.title_view)
+    TextView titleView;
+
+    @Bind(R.id.excerpt_view)
+    TextView contentView;
+
+    @Bind(R.id.created_date_view)
+    TextView createdDateView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
 
-        // เชื่อม Activity กับ View XML (res/layout/...) โดยใช้แบบเดียวกับ Activity01
-        setContentView(R.layout.demo_01_activity_01);
+        setContentView(R.layout.demo_03_activity_02_item);
 
-        // เชื่อมตัวแปรกับ View XML ตาม id ที่กำหนดไว้
-        resultView = (TextView) findViewById(R.id.result_view);
+        ButterKnife.bind(this);
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+
+        long id = bundle.getLong("id");
+
+        request(id);
     }
 
-    // ทำการผูกเมธอดเอาไว้ใน XML
-    public void onExecuteClick(View view)
+    private void request(long id)
     {
         // อ่านเรื่อง AsyncTask ได้ที่ http://devahoy.com/posts/android-asynctask-tutorial/
-        // <Void, Void, String> => Parameter, Progress, Result
-        // ในที่นี้ไม่มี Parameter ไม่มีการคำนวน Progress และ return ผลลัพธ์เป็นสตริง
-        // (ดูความแตกต่างได้ใน demo01/Activity02)
-        AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>()
+        // <Long, Void, String> => Parameter, Progress, Result
+        // ในที่นี้ต้องการส่งตัวเลขเป็น Parameter ไม่มีการคำนวน Progress และ return ผลลัพธ์เป็นสตริง
+        AsyncTask<Long, Void, String> task = new AsyncTask<Long, Void, String>()
         {
             private Context context;
 
-            // อ่านเรื่อง ProgressDialog
-            // ได้ที่ https://examples.javacodegeeks.com/android/core/ui/progressdialog/android-progressdialog-example/
+            // อ่านเรื่อง ProgressDialog ได้ที่
+            // https://examples.javacodegeeks.com/android/core/ui/progressdialog/android-progressdialog-example/
 
             // ประกาศตัวแปรไว้ใช้เก็บ ProgressDialog
             private ProgressDialog dialog;
@@ -62,24 +78,23 @@ public class Activity13 extends AppCompatActivity
                 /*
                     เก็บ Instance ของ Activity นี้ลงในตัวแปร Context
                     ซึ่ง AppCompatActivity สืบทอดจาก Activity และ Activity สืบทอดจาก Context
-                    ดังนั้น Activity13 ที่สืบทอด AppCompatActivity จึงสามารถเปลี่ยนตัวเองเป็น Context ได้
+                    ดังนั้น Activity02WithId ที่สืบทอด AppCompatActivity จึงสามารถเปลี่ยนตัวเองเป็น Context ได้
                     ตามหลัก Polymorphism (https://docs.oracle.com/javase/tutorial/java/IandI/polymorphism.html)
                  */
-                context = Activity13.this;
+                context = Activity02ById.this;
 
                 // แสดง ProgressDialog
-                dialog = ProgressDialog.show(context, "Demo 01", "Executing...");
+                dialog = ProgressDialog.show(context, "Demo 03", "Executing...");
             }
 
             // เป็นการทำงานใน Background Thread ซึ่งมีไว้เพื่อทำงานเล็กหรือใหญ่โดยไม่ทำให้ UI กระตุก
-            // Void... params อาจจะงงตรง ... ไปอ่านได้ที่ http://docs.oracle.com/javase/tutorial/java/javaOO/arguments.html#varargs
             @Override
-            protected String doInBackground(Void... params)
+            protected String doInBackground(Long... params)
             {
                 try
                 {
-                    // สั่งให้ Background Thread หยุดงานเป็นเวลา 1 วินาที (1000 มิลลิวินาที)
-                    Thread.sleep(1000);
+                    // สั่งให้ Background Thread หยุดงานเป็นเวลา 0.2 วินาที (200 มิลลิวินาที)
+                    Thread.sleep(200);
 
                     /*
                         จริงๆ ไม่ต้องสั่ง Thread.sleep ก็ได้นะครับ
@@ -94,28 +109,27 @@ public class Activity13 extends AppCompatActivity
                     e.printStackTrace();
                 }
 
-
                 // อ่านสตริง url จาก XML (res/values/string.xml)
                 String base_url = context.getString(R.string.url);
 
                 // ทำการกำหนด url ที่ต้องการเรียก HTTP Request
-                String url = base_url + "/Demo-01/13-PostJSONArray.php";
+                String url = base_url + "/Demo-03/03-ReadById.php";
+
+                // https://en.wikipedia.org/wiki/Query_string
+                // เพิ่ม queryString (params คือ สตริงที่ส่งมาตอน execute ซึ่ง length ของ params จะเท่ากับจำนวนสตริงที่ส่งมา)
+                url = url + "?id=" + params[0];
 
                 /*
                     ลำดับต่อไปจะใช้ไลบรารี่ OkHttp3 ในการใช้งาน HTTP Request
                     http://www.artit-k.com/dev-okhttp-library-for-android/
                 */
 
-                // สร้าง Request Body แบบ Form ด้วย FormBody.Builder
-                FormBody.Builder formBodyBuilder = new FormBody.Builder();
-                FormBody formBody = formBodyBuilder.build();
-
                 // สร้าง Request Builder และกำหนด URL ปลายทาง
                 Request.Builder requestBuilder = new Request.Builder();
                 requestBuilder.url(url);
 
-                // กำหนดให้ HTTP Request Method เป็น POST และไม่มีข้อมูลใดๆ ส่งไป
-                requestBuilder.post(formBody);
+                // กำหนดให้ HTTP Request Method เป็น GET
+                requestBuilder.get();
 
                 // ใช้ Request Builder สร้าง Request อีกที
                 Request request = requestBuilder.build();
@@ -131,11 +145,21 @@ public class Activity13 extends AppCompatActivity
                     // ทำการ Request
                     Response response = call.execute();
 
-                    // ทำการอ่านผลลัพธ์ในรูปแบบออบเจกต์
-                    ResponseBody responseBody = response.body();
+                    // 2xx ใน HTTP Response Code คือ สำเร็จ
+                    // อ่านเรื่อง HTTP Response Code ได้ที่ https://goo.gl/MXVo6k
+                    if(response.isSuccessful())
+                    {
+                        // ทำการอ่านผลลัพธ์ในรูปแบบออบเจกต์
+                        ResponseBody responseBody = response.body();
 
-                    // ส่ง ผลลัพธ์ ไปแสดงผลใน resultView โดยนำ responseBody มาแปลงเป็น string
-                    return responseBody.string();
+                        // ส่ง ผลลัพธ์ ไป onPoseExecute โดยนำ responseBody มาแปลงเป็น string
+                        return responseBody.string();
+                    }
+                    else
+                    {
+                        // ส่ง Response Code และ Message ไป onPostExecute
+                        return response.code() + " : " + response.message();
+                    }
                 }
                 // ในการใช้ call.execute() จะต้องดัก catch(IOException) เสมอ
                 catch (IOException e)
@@ -152,23 +176,33 @@ public class Activity13 extends AppCompatActivity
             {
                 super.onPostExecute(s);
 
-                // อัพเดทข้อความ
-                resultView.setText(s);
+                try
+                {
+                    // แปลงสตริงเป็น JSONObject
+                    JSONObject object = new JSONObject(s);
+
+                    String title = object.optString("title");
+                    String content = object.optString("content");
+                    String createdDate = object.optString("created_date");
+
+                    titleView.setText(title);
+                    contentView.setText(content);
+                    createdDateView.setText(createdDate);
+                }
+                // เมื่อมีการแปลงสตริงเป็น JSONArray ต้องดัก catch JSONException เสมอ
+                // เพราะสตริงอาจจะไม่ใช่ JSON Format ที่ถูกต้อง
+                catch (JSONException e)
+                {
+                    // แสดงผล Error ใน Log Monitor
+                    e.printStackTrace();
+                }
 
                 // ปิด ProgressDialog
                 dialog.dismiss();
             }
         };
 
-        // สั่งให้ AsyncTask เริ่มต้นทำงาน
-        task.execute();
+        // สั่งให้ AsyncTask เริ่มต้นทำงาน โดยส่ง id ไปด้วย
+        task.execute(id);
     }
-
-    // ทำการผูกเมธอดเอาไว้ใน XML
-    public void onClearClick(View view)
-    {
-        // ลบข้อความ
-        resultView.setText("");
-    }
-
 }

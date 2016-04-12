@@ -27,7 +27,7 @@ public class Activity14 extends AppCompatActivity
     protected EditText bView;
 
     // ประกาศตัวแปรเพื่อไว้ใช้กำหนดข้อความผลลัพธ์
-    protected TextView resultView;
+    TextView resultView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
