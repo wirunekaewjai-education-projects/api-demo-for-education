@@ -6,8 +6,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.devdayo.app.R;
@@ -48,6 +46,7 @@ public class Activity04 extends AppCompatActivity
         // เชื่อมตัวแปรกับ View XML ตาม id ที่กำหนดไว้
         ButterKnife.bind(this);
 
+        // รีเควสข้อมูลแบบลิสต์
         request();
     }
 
@@ -195,6 +194,7 @@ public class Activity04 extends AppCompatActivity
         task.execute();
     }
 
+    // ทำการผูกเมธอดเอาไว้ใน XML
     public void onDeleteClick(View view)
     {
         // อ่านเรื่อง AsyncTask ได้ที่ http://devahoy.com/posts/android-asynctask-tutorial/
@@ -324,18 +324,24 @@ public class Activity04 extends AppCompatActivity
                 // ปิด ProgressDialog
                 dialog.dismiss();
 
+                // ดึงไอเทมที่เลือกไว้ใน Spinner ล่าสุด
                 Item item = (Item) spinner.getSelectedItem();
 
+                // ดึง Adapter ที่ตั้งไว้กับ Spinner และแปลงเป็น ItemAdapter
                 ItemAdapter adapter = (ItemAdapter) spinner.getAdapter();
+
+                // ลบไอเทม
                 adapter.remove(item);
+
+                // บอก Adapter ว่าให้จัดการ View ใหม่เพราะมีข้อมูลเปลี่ยนแปลง
                 adapter.notifyDataSetChanged();
             }
         };
 
-        // อ่านค่าที่ผู้ใช้กรอกแล้วแปลงเป็นสตริง
+        // อ่านค่าไอดีแล้วแปลงเป็นสตริง
         String id = spinner.getSelectedItemId() + "";
 
-        // สั่งให้ AsyncTask เริ่มต้นทำงาน
+        // สั่งให้ AsyncTask เริ่มต้นทำงาน โดยส่ง id ไปด้วย
         task.execute(id);
     }
 }

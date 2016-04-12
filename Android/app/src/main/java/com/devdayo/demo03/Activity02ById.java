@@ -28,6 +28,8 @@ import okhttp3.ResponseBody;
  */
 public class Activity02ById extends AppCompatActivity
 {
+    // @Bind ใช้แทน findViewById ซึ่งจะต้องติดตั้งไลบรารี่ ButterKnife ก่อนใช้
+
     @Bind(R.id.title_view)
     TextView titleView;
 
@@ -42,15 +44,24 @@ public class Activity02ById extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
 
+        // เชื่อม Activity กับ View XML (res/layout/...)
         setContentView(R.layout.demo_03_activity_02_item);
 
+        // เชื่อมตัวแปรกับ View XML ตาม id ที่กำหนดไว้
         ButterKnife.bind(this);
 
+        // http://www.akexorcist.com/2013/02/android-code-intent-with-bundle-extra.html
+        // ดึง Intent จาก Activity
         Intent intent = getIntent();
+
+        // http://stackoverflow.com/questions/4999991/what-is-a-bundle-in-an-android-application
+        // ดึง Intent จาก Bundle
         Bundle bundle = intent.getExtras();
 
+        // ดึง id ที่ส่งมาจาก Activity02
         long id = bundle.getLong("id");
 
+        // รีเควสข้อมูลจาก id
         request(id);
     }
 
@@ -180,8 +191,11 @@ public class Activity02ById extends AppCompatActivity
                 {
                     // แปลงสตริงเป็น JSONObject
                     JSONObject object = new JSONObject(s);
+
+                    // แปลง JSONObject เป็น Item
                     Item item = Item.parse(object);
 
+                    // อัพเดท View จากข้อมูลใน Item
                     titleView.setText(item.getTitle());
                     contentView.setText(item.getContent());
                     createdDateView.setText(item.getCreatedDate());

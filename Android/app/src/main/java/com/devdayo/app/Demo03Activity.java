@@ -87,8 +87,7 @@ public class Demo03Activity extends AppCompatActivity
     private static final Object[][] links =
             {
                     { "01. Create", Activity01.class },
-                    { "02. Read", Activity02.class },
-
+                    { "02. Read",   Activity02.class },
                     { "03. Update", Activity03.class },
                     { "04. Delete", Activity04.class },
             };

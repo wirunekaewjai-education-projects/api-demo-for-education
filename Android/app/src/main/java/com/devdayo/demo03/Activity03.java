@@ -55,11 +55,13 @@ public class Activity03 extends AppCompatActivity
         // เชื่อมตัวแปรกับ View XML ตาม id ที่กำหนดไว้
         ButterKnife.bind(this);
 
+        // ดักจับ Event การเลือก Item ของ Spinner
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
+                // รีเควสข้อมูลจาก id
                 request(id);
             }
 
@@ -70,9 +72,11 @@ public class Activity03 extends AppCompatActivity
             }
         });
 
+        // รีเควสข้อมูลแบบลิสต์
         request();
     }
 
+    // รีเควสข้อมูลแบบลิสต์
     private void request()
     {
         // อ่านเรื่อง AsyncTask ได้ที่ http://devahoy.com/posts/android-asynctask-tutorial/
@@ -195,9 +199,14 @@ public class Activity03 extends AppCompatActivity
                 {
                     // แปลงสตริงเป็น JSONArray
                     JSONArray array = new JSONArray(s);
+
+                    // แปลง JSONArray เป็น List<Item>
                     List<Item> items = Item.parse(array);
 
+                    // สร้าง Adapter เพื่อเป็นตัวเชื่อมระหว่าง Spinner และ List<Item>
                     ItemAdapter adapter = new ItemAdapter(items);
+
+                    // กำหนด Adapter ให้กับ Spinner
                     spinner.setAdapter(adapter);
                 }
                 // เมื่อมีการแปลงสตริงเป็น JSONArray ต้องดัก catch JSONException เสมอ
@@ -217,6 +226,7 @@ public class Activity03 extends AppCompatActivity
         task.execute();
     }
 
+    // รีเควสข้อมูลจาก id
     private void request(long id)
     {
         // อ่านเรื่อง AsyncTask ได้ที่ http://devahoy.com/posts/android-asynctask-tutorial/
@@ -343,8 +353,11 @@ public class Activity03 extends AppCompatActivity
                 {
                     // แปลงสตริงเป็น JSONObject
                     JSONObject object = new JSONObject(s);
+
+                    // แปลง JSONObject เป็น Item
                     Item item = Item.parse(object);
 
+                    // อัพเดท View จากข้อมูลใน Item
                     titleView.setText(item.getTitle());
                     contentView.setText(item.getContent());
                 }
@@ -365,6 +378,7 @@ public class Activity03 extends AppCompatActivity
         task.execute(id);
     }
 
+    // ทำการผูกเมธอดเอาไว้ใน XML
     public void onUpdateClick(View view)
     {
         // อ่านเรื่อง AsyncTask ได้ที่ http://devahoy.com/posts/android-asynctask-tutorial/
@@ -493,12 +507,17 @@ public class Activity03 extends AppCompatActivity
             {
                 super.onPostExecute(s);
 
+                // ดึงไอเทมที่เลือกไว้ใน Spinner ล่าสุด
                 Item item = (Item) spinner.getSelectedItem();
 
+                // อัพเดทไอเทม
                 item.setTitle(titleView.getText().toString());
                 item.setContent(contentView.getText().toString());
 
+                // ดึง Adapter ที่ตั้งไว้กับ Spinner และแปลงเป็น ItemAdapter
                 ItemAdapter adapter = (ItemAdapter) spinner.getAdapter();
+
+                // บอก Adapter ว่าให้จัดการ View ใหม่เพราะมีข้อมูลเปลี่ยนแปลง
                 adapter.notifyDataSetChanged();
 
                 // ปิด ProgressDialog
@@ -506,7 +525,7 @@ public class Activity03 extends AppCompatActivity
             }
         };
 
-        // อ่านค่าที่ผู้ใช้กรอกแล้วแปลงเป็นสตริง
+        // อ่านค่าไอดีและที่ผู้ใช้กรอกแล้วแปลงเป็นสตริง
         String id = spinner.getSelectedItemId() + "";
         String title = titleView.getText().toString();
         String content = contentView.getText().toString();

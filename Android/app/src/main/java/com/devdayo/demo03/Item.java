@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class Item
 {
+    // กำหนดเป็น private เพื่อไม่ใช้ภายนอกเข้ามาแก้ไขโดยตรง
     private long id;
     private String title;
     private String excerpt;
@@ -51,14 +52,18 @@ public class Item
     {
         this.content = content;
 
+        // กำหนดให้ excerpt มีขนาดไม่เกิน 64 ตัวอักษร
         int length = Math.min(content.length(), 64);
         this.excerpt = content.substring(0, length);
     }
 
+    // แปลง JSONObject เป็น Item
     public static Item parse(JSONObject object)
     {
+        // สร้างไอเทมใหม่
         Item item = new Item();
 
+        // อ่านค่าจาก JSONObject ด้วย key ต่างๆ เพื่อนำมากำหนดให้ตัวแปรของ Item
         item.id = object.optInt("id");
         item.title = object.optString("title");
         item.excerpt = object.optString("excerpt");
@@ -68,16 +73,23 @@ public class Item
         return item;
     }
 
+    // แปลง JSONArray เป็น List<Item>
     public static List<Item> parse(JSONArray array)
     {
+        // เนื่องจาก List เป็น Abstract และมีคลาสลูกมากมายทั้ง ArrayList และ Vector ซึ่งในที่นี้เลือกใช้ ArrayList ครับ
         List<Item> items = new ArrayList<>();
 
+        // อ่านค่าของจำนวนข้อมูลใน JSONArray และวนลูป
         int length = array.length();
         for (int i = 0; i < length; i++)
         {
+            // ดึงค่า JSONObject จาก JSONArray index ที่ i
             JSONObject object = array.optJSONObject(i);
+
+            // แปลง JSONObject เป็น Item
             Item item = parse(object);
 
+            // เพิ่มไอเทมลงใน List
             items.add(item);
         }
 

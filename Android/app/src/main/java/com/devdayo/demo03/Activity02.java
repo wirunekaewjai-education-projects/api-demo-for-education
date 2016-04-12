@@ -6,22 +6,16 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.devdayo.app.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -53,14 +47,19 @@ public class Activity02 extends AppCompatActivity
         // เชื่อมตัวแปรกับ View XML ตาม id ที่กำหนดไว้
         ButterKnife.bind(this);
 
+        // ดักจับ Event การคลิด Item ของ ListView
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
+                // สร้าง Intent และกำหนดปลายทางไปยัง Activity02ById
                 Intent intent = new Intent(getApplicationContext(), Activity02ById.class);
+
+                // แนบ id ไปกับ Intent ด้วย
                 intent.putExtra("id", id);
 
+                // เปิด Activity จากข้อมูลใน Intent
                 startActivity(intent);
             }
         });
@@ -191,9 +190,14 @@ public class Activity02 extends AppCompatActivity
                 {
                     // แปลงสตริงเป็น JSONArray
                     JSONArray array = new JSONArray(s);
+
+                    // แปลง JSONArray เป็น List<Item>
                     List<Item> items = Item.parse(array);
 
+                    // สร้าง Adapter เพื่อเป็นตัวเชื่อมระหว่าง Spinner และ List<Item>
                     ItemAdapter adapter = new ItemAdapter(items);
+
+                    // กำหนด Adapter ให้กับ Spinner
                     listView.setAdapter(adapter);
                 }
                 // เมื่อมีการแปลงสตริงเป็น JSONArray ต้องดัก catch JSONException เสมอ
