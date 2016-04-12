@@ -1,59 +1,76 @@
 package com.devdayo.postapp;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.devdayo.postapp.demo01.*;
 
 public class MainActivity extends AppCompatActivity
 {
+    protected LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener()
+        linearLayout = (LinearLayout) findViewById(R.id.demo_layout);
+
+        for(int i = 0; i < links.length; i++)
         {
-            @Override
-            public void onClick(View view)
+            Object[] link = links[i];
+
+            String text = link[0].toString();
+            if(link.length == 1)
             {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                TextView tv = new TextView(getApplicationContext());
+                tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                tv.setTextColor(Color.BLACK);
+                tv.setText(text);
+
+                linearLayout.addView(tv);
             }
-        });
-    }
+            else
+            {
+                final Class<?> cls = (Class<?>) link[1];
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+                Button button = new Button(getApplicationContext());
+                button.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+                button.setText(text);
+                button.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        Intent intent = new Intent(getApplicationContext(), cls);
+                        startActivity(intent);
+                    }
+                });
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings)
-        {
-            return true;
+                linearLayout.addView(button);
+            }
         }
-
-        return super.onOptionsItemSelected(item);
     }
+
+    private static final Object[][] links =
+            {
+                    { "Demo 01" },
+                    { "01. Request", Activity01.class },
+                    { "02. Request With Params", Activity02.class },
+
+                    { "03. GET", Activity03.class },
+                    { "04. GET With Params", Activity04.class },
+                    { "05. GET JSON Object", Activity05.class },
+                    { "06. GET JSON Object With Params", Activity06.class },
+                    { "07. GET JSON Array", Activity07.class },
+                    { "08. GET JSON Array With Params", Activity08.class },
+                    { "----" },
+            };
 }
