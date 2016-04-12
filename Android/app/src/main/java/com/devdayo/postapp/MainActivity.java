@@ -71,6 +71,13 @@ public class MainActivity extends AppCompatActivity
                     { "06. GET JSON Object With Params", Activity06.class },
                     { "07. GET JSON Array", Activity07.class },
                     { "08. GET JSON Array With Params", Activity08.class },
+
+                    { "09. POST", Activity09.class },
+                    { "10. POST With Params", Activity10.class },
+                    { "11. POST JSON Object", Activity11.class },
+                    { "12. POST JSON Object With Params", Activity12.class },
+                    { "13. POST JSON Array", Activity13.class },
+                    { "14. POST JSON Array With Params", Activity14.class },
                     { "----" },
             };
 }

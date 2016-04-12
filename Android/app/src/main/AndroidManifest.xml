@@ -36,6 +36,20 @@
         </activity>
         <activity android:name=".demo01.Activity08">
         </activity>
+
+
+        <activity android:name=".demo01.Activity09">
+        </activity>
+        <activity android:name=".demo01.Activity10">
+        </activity>
+        <activity android:name=".demo01.Activity11">
+        </activity>
+        <activity android:name=".demo01.Activity12">
+        </activity>
+        <activity android:name=".demo01.Activity13">
+        </activity>
+        <activity android:name=".demo01.Activity14">
+        </activity>
     </application>
 
 </manifest>
