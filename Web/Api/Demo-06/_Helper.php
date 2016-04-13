@@ -107,7 +107,7 @@ function parse_int($array, $key, $default_value, $min, $max = null)
             die();
         }
 
-        $val = intval($array[$key]);
+        $val = (int) $array[$key];
         if($val < $min || ($max !== null && $val > $max))
         {
             http_response_code(400);

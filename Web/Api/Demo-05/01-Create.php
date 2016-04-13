@@ -59,8 +59,7 @@ if($result->num_rows > 0)
     // อ่านเรื่อง Associative Array ได้ที่ : http://www.w3schools.com/php/php_arrays.asp
     $row = $result->fetch_assoc();
 
-    // อ่านเรื่อง intval ได้ที่ : http://php.net/manual/en/function.intval.php
-    $object['id'] = intval($row['id']);
+    $object['id'] = (int) $row['id'];
     $object['created_date'] = $row['created_date'];
 }
 

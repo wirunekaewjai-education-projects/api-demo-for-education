@@ -69,8 +69,7 @@ foreach ($row as $key => $value)
 {
     if($key === 'id')
     {
-        // อ่านเรื่อง intval ได้ที่ : http://php.net/manual/en/function.intval.php
-        $object[$key] = intval($value);
+        $object[$key] = (int) $value;
     }
     else
     {

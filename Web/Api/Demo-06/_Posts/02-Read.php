@@ -78,8 +78,7 @@ if($result->num_rows > 0)
         {
             if($key === 'id')
             {
-                // อ่านเรื่อง intval ได้ที่ : http://php.net/manual/en/function.intval.php
-                $item[$key] = intval($value);
+                $item[$key] = (int) $value;
             }
             else
             {

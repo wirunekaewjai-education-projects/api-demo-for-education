@@ -51,8 +51,7 @@ if($result->num_rows > 0)
     // สร้างตัวแปรแบบ Associative Array เพื่อเก็บผลลัพธ์
     $object = [];
 
-    // อ่านเรื่อง intval ได้ที่ : http://php.net/manual/en/function.intval.php
-    $object['id'] = intval($row['id']);
+    $object['id'] = (int) $row['id'];
     $object['title'] = $row['title'];
     $object['content'] = $row['content'];
     $object['created_date'] = $row['created_date'];

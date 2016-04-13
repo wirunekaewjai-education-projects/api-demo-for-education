@@ -69,11 +69,9 @@ if($result->num_rows > 0)
     // While-Loop : http://www.w3schools.com/php/php_looping.asp
     while($row = $result->fetch_assoc())
     {
-        // อ่านเรื่อง intval ได้ที่ : http://php.net/manual/en/function.intval.php
-
         // สร้าง Associative Array เพื่อเก็บข้อมูลในแต่ละ row
         $item = [];
-        $item['id'] = intval($row['id']);
+        $item['id'] = (int) $row['id'];
         $item['title'] = $row['title'];
         $item['excerpt'] = $row['excerpt'];
         $item['created_date'] = $row['created_date'];
