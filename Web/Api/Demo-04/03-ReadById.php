@@ -23,7 +23,7 @@ $conn = database_connect();
 
 // อ่านเรื่อง SQL (MySQL) ได้ที่ : http://www.w3schools.com/php/php_mysql_intro.asp
 // สร้าง SQL Command สำหรับการอ่านข้อมูล
-$sql = "SELECT `id`,`title`,`excerpt`,`created_date`,`modified_date`
+$sql = "SELECT `id`,`title`,`content`,`created_date`,`modified_date`
         FROM `posts`
         WHERE `id`=$id
         ORDER BY `created_date` DESC

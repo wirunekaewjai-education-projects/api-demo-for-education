@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.devdayo.demo04.Activity02;
+
 public class MainActivity extends AppCompatActivity
 {
     // ประกาศตัวแปรเพื่อไว้ใช้เพิ่มปุ่มเมนู
@@ -84,5 +86,6 @@ public class MainActivity extends AppCompatActivity
                     { "Demo 01", Demo01Activity.class },
                     { "Demo 02", Demo02Activity.class },
                     { "Demo 03", Demo03Activity.class },
+                    { "Demo 04", Activity02.class },
             };
 }

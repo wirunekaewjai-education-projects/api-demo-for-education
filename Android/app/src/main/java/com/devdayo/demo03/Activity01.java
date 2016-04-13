@@ -171,7 +171,7 @@ public class Activity01 extends AppCompatActivity
                 // ในการใช้ call.execute() จะต้องดัก catch(IOException) เสมอ
                 catch (IOException e)
                 {
-                    // ส่ง error ไปแสดงผลใน resultView
+                    // ส่ง error ไปแสดงผล
                     return e.getLocalizedMessage();
                 }
             }

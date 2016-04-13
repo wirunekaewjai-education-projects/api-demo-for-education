@@ -175,7 +175,7 @@ public class Activity02ById extends AppCompatActivity
                 // ในการใช้ call.execute() จะต้องดัก catch(IOException) เสมอ
                 catch (IOException e)
                 {
-                    // ส่ง error ไปแสดงผลใน resultView
+                    // ส่ง error ไปแสดงผล
                     return e.getLocalizedMessage();
                 }
             }
@@ -200,7 +200,7 @@ public class Activity02ById extends AppCompatActivity
                     contentView.setText(item.getContent());
                     createdDateView.setText(item.getCreatedDate());
                 }
-                // เมื่อมีการแปลงสตริงเป็น JSONArray ต้องดัก catch JSONException เสมอ
+                // เมื่อมีการแปลงสตริงเป็น JSONObject ต้องดัก catch JSONException เสมอ
                 // เพราะสตริงอาจจะไม่ใช่ JSON Format ที่ถูกต้อง
                 catch (JSONException e)
                 {

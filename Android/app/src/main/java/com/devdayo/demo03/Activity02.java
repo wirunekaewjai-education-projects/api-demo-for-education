@@ -47,7 +47,7 @@ public class Activity02 extends AppCompatActivity
         // เชื่อมตัวแปรกับ View XML ตาม id ที่กำหนดไว้
         ButterKnife.bind(this);
 
-        // ดักจับ Event การคลิด Item ของ ListView
+        // ดักจับ Event การคลิก Item ของ ListView
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
@@ -174,7 +174,7 @@ public class Activity02 extends AppCompatActivity
                 // ในการใช้ call.execute() จะต้องดัก catch(IOException) เสมอ
                 catch (IOException e)
                 {
-                    // ส่ง error ไปแสดงผลใน resultView
+                    // ส่ง error ไปแสดงผล
                     return e.getLocalizedMessage();
                 }
             }

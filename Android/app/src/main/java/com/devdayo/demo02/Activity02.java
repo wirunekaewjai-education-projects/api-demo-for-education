@@ -161,13 +161,13 @@ public class Activity02 extends AppCompatActivity
                     // ทำการอ่านผลลัพธ์ในรูปแบบออบเจกต์
                     ResponseBody responseBody = response.body();
 
-                    // ส่ง ผลลัพธ์ ไปแสดงผลใน resultView โดยนำ responseBody มาแปลงเป็น string
+                    // ส่ง ผลลัพธ์ ไปแสดงผลโดยนำ responseBody มาแปลงเป็น string
                     return responseBody.string();
                 }
                 // ในการใช้ call.execute() จะต้องดัก catch(IOException) เสมอ
                 catch (IOException e)
                 {
-                    // ส่ง error ไปแสดงผลใน resultView
+                    // ส่ง error ไปแสดงผล
                     return e.getLocalizedMessage();
                 }
             }
@@ -202,7 +202,7 @@ public class Activity02 extends AppCompatActivity
                     // อัพเดทผลลัพธ์
                     resultView.setText(text);
                 }
-                // เมื่อมีการแปลงสตริงเป็น JSONObject ต้องดัก catch JSONException เสมอ
+                // เมื่อมีการแปลงสตริงเป็น JSONArray ต้องดัก catch JSONException เสมอ
                 // เพราะสตริงอาจจะไม่ใช่ JSON Format ที่ถูกต้อง
                 catch (JSONException e)
                 {

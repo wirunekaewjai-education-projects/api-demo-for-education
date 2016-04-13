@@ -121,6 +121,8 @@ public class ItemAdapter extends BaseAdapter
 
     class ViewHolder
     {
+        // @Bind ใช้แทน findViewById ซึ่งจะต้องติดตั้งไลบรารี่ ButterKnife ก่อนใช้
+
         @Bind(R.id.title_view)
         TextView titleView;
 
@@ -132,6 +134,7 @@ public class ItemAdapter extends BaseAdapter
 
         public ViewHolder(View convertView)
         {
+            // เชื่อมตัวแปรกับ View ใน convertView ตาม id ที่กำหนดไว้
             ButterKnife.bind(this, convertView);
         }
     }

@@ -168,13 +168,13 @@ public class Activity01 extends AppCompatActivity
                     // ทำการอ่านผลลัพธ์ในรูปแบบออบเจกต์
                     ResponseBody responseBody = response.body();
 
-                    // ส่ง ผลลัพธ์ ไปแสดงผลใน resultView โดยนำ responseBody มาแปลงเป็น string
+                    // ส่ง ผลลัพธ์ ไปแสดงผลโดยนำ responseBody มาแปลงเป็น string
                     return responseBody.string();
                 }
                 // ในการใช้ call.execute() จะต้องดัก catch(IOException) เสมอ
                 catch (IOException e)
                 {
-                    // ส่ง error ไปแสดงผลใน resultView
+                    // ส่ง error ไปแสดงผล
                     return e.getLocalizedMessage();
                 }
             }
