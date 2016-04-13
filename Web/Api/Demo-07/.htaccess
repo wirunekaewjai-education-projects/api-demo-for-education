@@ -1,0 +1,9 @@
+RewriteEngine on
+
+# อ่านเติมได้ที่ http://php.net/manual/en/security.hiding.php
+# Rewrite /foo/bar to /foo/bar.php (ทำให้ไม่ต้องพิมพ์ .php ใน url)
+RewriteRule ^([^.?]+)$ %{REQUEST_URI}.php [L]
+
+# Return 404 if original request is /foo/bar.php (ปิดการใช้งาน url ที่ระบุ .php)
+RewriteCond %{THE_REQUEST} "^[^ ]* .*?\.php[? ].*$"
+RewriteRule .* - [L,R=404]
