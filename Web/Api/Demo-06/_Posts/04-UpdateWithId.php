@@ -11,6 +11,13 @@ $json = file_get_contents("php://input");
 // อ่านข้อมูล JSON ที่ส่งมาแล้วแปลงเป็น Associative Array (true ในพารามิเตอร์หมายถึงให้แปลงเป็น Associative)
 $fields = json_decode($json, true);
 
+if($fields === null || empty($fields) === true)
+{
+    // 400 : Bad Request
+    http_response_code(400);
+    die();
+}
+
 $set_array = [];
 
 // อ่านเรื่อง array_key_exists ได้ที่ : http://www.w3schools.com/php/func_array_key_exists.asp
@@ -50,12 +57,20 @@ $sql = "UPDATE `posts`
 // ถ้าทำงานผิดพลาดจะจบการทำงานทันที
 database_query_boolean($conn, $sql);
 
+// ตรวจสอบว่าอัพเดทได้จริงหรือไม่ ?
+// ถ้าได้จะต้องมีค่ามากกว่า 0 (ในที่นี้ควรจะไม่เกิน 1 เพราะเราอัพเดทแค่ id เดียว)
+if($conn->affected_rows > 0)
+{
+    // 200 : OK
+    http_response_code(200);
+}
+else
+{
+    // 404 : Not Found
+    http_response_code(404);
+}
+
 // ปิดการเชื่อมต่อ MySQL
 $conn->close();
-
-// 200 : OK
-http_response_code(200);
-
-// จบการทำงานแบบไม่มีการแสดงผลใดๆ
 
 ?>
