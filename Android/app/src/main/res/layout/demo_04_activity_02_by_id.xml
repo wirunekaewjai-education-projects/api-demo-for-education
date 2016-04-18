@@ -26,6 +26,7 @@
 
                 <EditText
                     android:id="@+id/title_view"
+                    android:hint="Title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
@@ -43,6 +44,7 @@
 
             <EditText
                 android:id="@+id/content_view"
+                android:hint="Content"
                 android:layout_margin="@dimen/activity_horizontal_margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

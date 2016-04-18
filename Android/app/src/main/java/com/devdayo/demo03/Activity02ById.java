@@ -121,10 +121,10 @@ public class Activity02ById extends AppCompatActivity
                 }
 
                 // อ่านสตริง url จาก XML (res/values/string.xml)
-                String base_url = context.getString(R.string.url);
+                String baseUrl = context.getString(R.string.url);
 
                 // ทำการกำหนด url ที่ต้องการเรียก HTTP Request
-                String url = base_url + "/Demo-03/03-ReadById.php";
+                String url = baseUrl + "/Demo-03/03-ReadById.php";
 
                 // https://en.wikipedia.org/wiki/Query_string
                 // เพิ่ม queryString (params คือ สตริงที่ส่งมาตอน execute ซึ่ง length ของ params จะเท่ากับจำนวนสตริงที่ส่งมา)

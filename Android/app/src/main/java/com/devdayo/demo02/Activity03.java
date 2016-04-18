@@ -131,10 +131,10 @@ public class Activity03 extends AppCompatActivity
                 }
 
                 // อ่านสตริง url จาก XML (res/values/string.xml)
-                String base_url = context.getString(R.string.url);
+                String baseUrl = context.getString(R.string.url);
 
                 // ทำการกำหนด url ที่ต้องการเรียก HTTP Request
-                String url = base_url + "/Demo-02/03-PostJSONObjectCalculator.php";
+                String url = baseUrl + "/Demo-02/03-PostJSONObjectCalculator.php";
 
                 /*
                     ลำดับต่อไปจะใช้ไลบรารี่ OkHttp3 ในการใช้งาน HTTP Request

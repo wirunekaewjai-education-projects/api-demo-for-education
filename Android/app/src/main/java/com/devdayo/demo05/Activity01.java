@@ -1,4 +1,4 @@
-package com.devdayo.demo04;
+package com.devdayo.demo05;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -49,8 +49,8 @@ public class Activity01 extends AppCompatActivity
     {
         Context context = this;
 
-        // เปลี่ยนจาก AsyncTask มาเป็น HttpTask ที่สร้างเอง (จริงๆ แล้ว HttpTask สืบทอดมาจาก AsyncTask)
-        HttpTask<String> task = new HttpTask<String>(context, 500)
+        // เปลี่ยนจาก AsyncTask มาเป็น HttpTask แบบเดียวกับ demo04 ที่สร้างเอง (จริงๆ แล้ว HttpTask สืบทอดมาจาก AsyncTask)
+        com.devdayo.demo04.HttpTask<String> task = new com.devdayo.demo04.HttpTask<String>(context, 500)
         {
             @Override
             protected Response onExecute(String... params)
@@ -59,7 +59,7 @@ public class Activity01 extends AppCompatActivity
                 String baseUrl = getContext().getString(R.string.url);
 
                 // ทำการกำหนด url ที่ต้องการเรียก HTTP Request
-                String url = baseUrl + "/Demo-04/01-Create.php";
+                String url = baseUrl + "/Demo-05/01-Create.php";
 
                 // สร้าง Request Body แบบ Form ด้วย FormBody.Builder
                 FormBody.Builder formBodyBuilder = new FormBody.Builder();

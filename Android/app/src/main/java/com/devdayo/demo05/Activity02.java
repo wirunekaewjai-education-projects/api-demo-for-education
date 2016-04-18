@@ -1,4 +1,4 @@
-package com.devdayo.demo04;
+package com.devdayo.demo05;
 
 import android.content.Context;
 import android.content.Intent;
@@ -79,8 +79,8 @@ public class Activity02 extends AppCompatActivity
     {
         Context context = this;
 
-        // เปลี่ยนจาก AsyncTask มาเป็น HttpTask ที่สร้างเอง (จริงๆ แล้ว HttpTask สืบทอดมาจาก AsyncTask)
-        HttpTask<Void> task = new HttpTask<Void>(context, 500)
+        // เปลี่ยนจาก AsyncTask มาเป็น HttpTask  แบบเดียวกับ demo04 ที่สร้างเอง (จริงๆ แล้ว HttpTask สืบทอดมาจาก AsyncTask)
+        com.devdayo.demo04.HttpTask<Void> task = new com.devdayo.demo04.HttpTask<Void>(context, 500)
         {
             @Override
             protected Response onExecute(Void... params)
@@ -89,7 +89,7 @@ public class Activity02 extends AppCompatActivity
                 String baseUrl = getContext().getString(R.string.url);
 
                 // ทำการกำหนด url ที่ต้องการเรียก HTTP Request
-                String url = baseUrl + "/Demo-04/02-Read.php";
+                String url = baseUrl + "/Demo-05/02-Read.php";
 
                 // สร้าง Request Builder และกำหนด URL ปลายทาง
                 Request.Builder requestBuilder = new Request.Builder();

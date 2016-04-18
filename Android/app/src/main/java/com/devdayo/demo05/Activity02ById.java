@@ -1,4 +1,4 @@
-package com.devdayo.demo04;
+package com.devdayo.demo05;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -17,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -40,8 +43,20 @@ public class Activity02ById extends AppCompatActivity
     @Bind(R.id.content_view)
     EditText contentView;
 
+    @Bind(R.id.excerpt_view)
+    EditText excerptView;
+
     @Bind(R.id.created_date_view)
     TextView createdDateView;
+
+    @Bind(R.id.title_checkbox)
+    CheckBox titleCheckBox;
+
+    @Bind(R.id.content_checkbox)
+    CheckBox contentCheckBox;
+
+    @Bind(R.id.excerpt_checkbox)
+    CheckBox excerptCheckBox;
 
     long id;
 
@@ -51,7 +66,7 @@ public class Activity02ById extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         // เชื่อม Activity กับ View XML (res/layout/...)
-        setContentView(R.layout.demo_04_activity_02_by_id);
+        setContentView(R.layout.demo_05_activity_02_by_id);
 
         // เชื่อมตัวแปรกับ View XML ตาม id ที่กำหนดไว้
         ButterKnife.bind(this);
@@ -75,8 +90,8 @@ public class Activity02ById extends AppCompatActivity
     {
         Context context = this;
 
-        // เปลี่ยนจาก AsyncTask มาเป็น HttpTask ที่สร้างเอง (จริงๆ แล้ว HttpTask สืบทอดมาจาก AsyncTask)
-        HttpTask<Long> task = new HttpTask<Long>(context, 0)
+        // เปลี่ยนจาก AsyncTask มาเป็น HttpTask แบบเดียวกับ demo04 ที่สร้างเอง (จริงๆ แล้ว HttpTask สืบทอดมาจาก AsyncTask)
+        com.devdayo.demo04.HttpTask<Long> task = new com.devdayo.demo04.HttpTask<Long>(context, 0)
         {
             @Override
             protected Response onExecute(Long... params)
@@ -85,11 +100,14 @@ public class Activity02ById extends AppCompatActivity
                 String baseUrl = getContext().getString(R.string.url);
 
                 // ทำการกำหนด url ที่ต้องการเรียก HTTP Request
-                String url = baseUrl + "/Demo-04/03-ReadById.php";
+                String url = baseUrl + "/Demo-05/03-ReadById.php";
 
                 // https://en.wikipedia.org/wiki/Query_string
                 // เพิ่ม queryString (params คือ สตริงที่ส่งมาตอน execute ซึ่ง length ของ params จะเท่ากับจำนวนสตริงที่ส่งมา)
                 url = url + "?id=" + params[0];
+
+                // เพิ่ม queryString ในส่วนของฟิลด์ที่จะนำมาแสดงใน UI
+                url = url + "&fields=id,title,content,excerpt,created_date";
 
                 // สร้าง Request Builder และกำหนด URL ปลายทาง
                 Request.Builder requestBuilder = new Request.Builder();
@@ -121,6 +139,7 @@ public class Activity02ById extends AppCompatActivity
                     // อัพเดท View จากข้อมูลใน Item
                     titleView.setText(item.getTitle());
                     contentView.setText(item.getContent());
+                    excerptView.setText(item.getExcerpt());
                     createdDateView.setText(item.getCreatedDate());
                 }
                 // เมื่อมีการแปลง response body เป็น สตริง ต้องดัก catch IOException เสมอ
@@ -157,8 +176,8 @@ public class Activity02ById extends AppCompatActivity
     {
         Context context = this;
 
-        // เปลี่ยนจาก AsyncTask มาเป็น HttpTask ที่สร้างเอง (จริงๆ แล้ว HttpTask สืบทอดมาจาก AsyncTask)
-        HttpTask<String> task = new HttpTask<String>(context, 500)
+        // เปลี่ยนจาก AsyncTask มาเป็น HttpTask แบบเดียวกับ demo04 ที่สร้างเอง (จริงๆ แล้ว HttpTask สืบทอดมาจาก AsyncTask)
+        com.devdayo.demo04.HttpTask<String> task = new com.devdayo.demo04.HttpTask<String>(context, 500)
         {
             @Override
             protected Response onExecute(String... params)
@@ -167,7 +186,7 @@ public class Activity02ById extends AppCompatActivity
                 String baseUrl = getContext().getString(R.string.url);
 
                 // ทำการกำหนด url ที่ต้องการเรียก HTTP Request
-                String url = baseUrl + "/Demo-04/04-Update.php";
+                String url = baseUrl + "/Demo-05/04-Update.php";
 
                 // สร้าง Request Body แบบ Form ด้วย FormBody.Builder
                 FormBody.Builder formBodyBuilder = new FormBody.Builder();
@@ -176,6 +195,8 @@ public class Activity02ById extends AppCompatActivity
                 formBodyBuilder.add("id", params[0]);
                 formBodyBuilder.add("title", params[1]);
                 formBodyBuilder.add("content", params[2]);
+                formBodyBuilder.add("excerpt", params[3]);
+                formBodyBuilder.add("fields", params[4]);
 
                 FormBody formBody = formBodyBuilder.build();
 
@@ -218,17 +239,46 @@ public class Activity02ById extends AppCompatActivity
         String idString = id + "";
         String title = titleView.getText().toString();
         String content = contentView.getText().toString();
+        String excerpt = excerptView.getText().toString();
 
-        // สั่งให้ AsyncTask เริ่มต้นทำงาน โดยส่งสตริง id, title และ content ไปด้วย
-        task.execute(idString, title, content);
+        // สร้าง Collection ประเภท ArrayList เพื่อเก็บชื่อฟิลด์ที่จะมีการแก้ไข
+        ArrayList<String> fieldList = new ArrayList<>();
+
+        // ตรวจสอบว่ามีการทำเครื่องหมายถูกในกล่อง checkbox ของ title หรือไม่
+        if(titleCheckBox.isChecked())
+        {
+            // เพิ่มฟิลด์ title ลงในฟิลด์ที่จะแก้ไข
+            fieldList.add("title");
+        }
+
+        // ตรวจสอบว่ามีการทำเครื่องหมายถูกในกล่อง checkbox ของ content หรือไม่
+        if(contentCheckBox.isChecked())
+        {
+            // เพิ่มฟิลด์ content ลงในฟิลด์ที่จะแก้ไข
+            fieldList.add("content");
+        }
+
+        // ตรวจสอบว่ามีการทำเครื่องหมายถูกในกล่อง checkbox ของ excerpt หรือไม่
+        if(excerptCheckBox.isChecked())
+        {
+            // เพิ่มฟิลด์ excerpt ลงในฟิลด์ที่จะแก้ไข
+            fieldList.add("excerpt");
+        }
+
+        // ทำการรวม String จาก ArrayList ให้เป็น String เดียวโดยใช้ "," ขั้น
+        // เช่น "title,content,excerpt";
+        String fields = TextUtils.join(",", fieldList);
+
+        // สั่งให้ AsyncTask เริ่มต้นทำงาน โดยส่งสตริง id, title, content, excerpt และ fields ไปด้วย
+        task.execute(idString, title, content, excerpt, fields);
     }
 
     public void onDeleteClick(View view)
     {
         Context context = this;
 
-        // เปลี่ยนจาก AsyncTask มาเป็น HttpTask ที่สร้างเอง (จริงๆ แล้ว HttpTask สืบทอดมาจาก AsyncTask)
-        HttpTask<Long> task = new HttpTask<Long>(context, 500)
+        // เปลี่ยนจาก AsyncTask มาเป็น HttpTask แบบเดียวกับ demo04 ที่สร้างเอง (จริงๆ แล้ว HttpTask สืบทอดมาจาก AsyncTask)
+        com.devdayo.demo04.HttpTask<Long> task = new com.devdayo.demo04.HttpTask<Long>(context, 500)
         {
             @Override
             protected Response onExecute(Long... params)
@@ -237,7 +287,7 @@ public class Activity02ById extends AppCompatActivity
                 String baseUrl = getContext().getString(R.string.url);
 
                 // ทำการกำหนด url ที่ต้องการเรียก HTTP Request
-                String url = baseUrl + "/Demo-04/05-Delete.php";
+                String url = baseUrl + "/Demo-05/05-Delete.php";
 
                 // สร้าง Request Body แบบ Form ด้วย FormBody.Builder
                 FormBody.Builder formBodyBuilder = new FormBody.Builder();
