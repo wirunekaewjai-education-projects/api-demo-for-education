@@ -18,9 +18,8 @@ filter_numeric_vars($_POST, ['id']);
 // อ่านค่าไอดีและเก็บไว้ที่ $id
 $id = $_POST['id'];
 
-// สร้าง Array ของชื่อฟิลด์ที่อนุญาตให้ใช้ได้
-$field_defaults = [ 'title', 'excerpt', 'content' ];
-$fields = parse_fields_to_array($_POST, 'fields', $field_defaults);
+// สร้าง Array ของชื่อฟิลด์ที่จะอัพเดท
+$fields = parse_fields_to_array($_POST, 'fields', []);
 
 $set_array = [];
 
@@ -58,6 +57,14 @@ if(in_array('content', $fields))
 // อ่านเรื่อง implode ได้ที่ http://php.net/manual/en/function.implode.php
 // ต่อสตริงจากสตริงอาร์เรย์ด้วย ', '
 $set_sql = implode(', ', $set_array);
+
+if(empty($set_sql) === true)
+{
+    // 400 : Bad Request
+    http_response_code(400);
+
+    die();
+}
 
 // ถ้า Connect ไม่ได้จะจบการทำงานทันที
 $conn = database_connect();
